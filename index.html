@@ -78,7 +78,90 @@
           }
         };
 
+        <!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>The Heartbeat of Melbourne’s Coffee Culture</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+    <style>
+        body { margin: 40px; font-family: sans-serif; background-color: #fcfaf2; }
+        .content { max-width: 800px; margin: 0 auto; }
+        h1 { color: #4a3525; }
+        .chart-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <h1>The Heartbeat of Melbourne’s Coffee Culture ☕</h1>
+        <p>メルボルンのコーヒー文化をデータで紐解くプロジェクト。まずはテスト表示！</p>
+        
+        <div id="vis1" class="chart-box"></div>
+    </div>
+
+    <script>
+        const salesSpec = {
+          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+          "title": {
+            "text": "Most Popular Brews by Total Revenue",
+            "subtitle": "Analyzing sales across different coffee types in Melbourne",
+            "font": "sans-serif",
+            "fontSize": 16,
+            "anchor": "start",
+            "color": "#4a3525"
+          },
+          "width": "container",
+          "height": 350,
+          "data": { "url": "Coffe_sales.csv" },
+          
+          "transform": [
+            {
+              "aggregate": [{"op": "sum", "field": "money", "as": "total_revenue"}],
+              "groupby": ["coffee_name"]
+            }
+          ],
+          
+          "mark": {
+            "type": "bar", 
+            "color": "#6F4E37", 
+            "cornerRadiusEnd": 4 
+          },
+          
+          "encoding": {
+            "y": {
+              "field": "coffee_name", 
+              "type": "nominal", 
+              "sort": "-x", 
+              "axis": {
+                "title": "Coffee Type",
+                "labelFontSize": 12
+              }
+            },
+            "x": {
+              "field": "total_revenue", 
+              "type": "quantitative", 
+              "axis": {
+                "title": "Total Revenue ($)",
+                "grid": true,
+                "format": "$,.0f" 
+              }
+            },
+            "tooltip": [
+              {"field": "coffee_name", "type": "nominal", "title": "Coffee"},
+              {"field": "total_revenue", "type": "quantitative", "title": "Total Revenue", "format": "$,.2f"}
+            ]
+          }
+        };
+
         vegaEmbed('#vis1', spec);
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>
