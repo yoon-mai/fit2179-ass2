@@ -46,6 +46,10 @@
     <p>Which coffee sold well</p>
 
     <div id="vis1" class="chart-box"></div>
+    <br><br>
+    <div id="vis2" class="chart-box"></div>
+    <br><br>
+    <div id="vis3" class="chart-box"></div>
   </div>
 
   <script>
@@ -181,6 +185,67 @@
     };
 
   vegaEmbed("#vis2", timeSpec);
+
+  const dateSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "title": {
+    "text": "Daily Coffee Orders Over Time",
+    "subtitle": "Total number of coffee orders by date",
+    "anchor": "start",
+    "fontSize": 20,
+    "color": "#4a3525"
+  },
+
+  "width": 850,
+  "height": 420,
+
+  "data": {
+    "url": "Coffe_sales.csv",
+    "format": {"type": "csv"}
+  },
+
+  "transform": [
+    {
+      "aggregate": [
+        {"op": "count", "as": "orders"}
+      ],
+      "groupby": ["date"]
+    }
+  ],
+
+  "mark": {
+    "type": "line",
+    "point": true,
+    "color": "#6F4E37"
+  },
+
+  "encoding": {
+    "x": {
+      "field": "date",
+      "type": "temporal",
+      "axis": {
+        "title": "Date",
+        "format": "%b %d"
+      }
+    },
+
+    "y": {
+      "field": "orders",
+      "type": "quantitative",
+      "axis": {
+        "title": "Number of Orders"
+      }
+    },
+
+    "tooltip": [
+      {"field": "date", "type": "temporal", "title": "Date"},
+      {"field": "orders", "type": "quantitative", "title": "Orders"}
+    ]
+  }
+};
+
+vegaEmbed("#vis3", dateSpec);
   </script>
 </body>
 </html>
