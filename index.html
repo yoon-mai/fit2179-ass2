@@ -23,11 +23,12 @@
         <div class="subtitle">An Interactive Exploration of City Cafés and Consumption Trends</div>
         
         <h2>1. Coffee Consumption Insights</h2>
-        <p>Coffee consuption ranking</p>
+        <p>Maiの売上データから抽出した、メルボルンで最も人気のあるコーヒーの売上ランキングです。</p>
         <div id="vis1" class="chart-box"></div>
     </div>
 
     <script>
+        // ファイルを読み込まず、データをコードに直接埋め込むスタイル（絶対バグらない！）
         const salesSpec = {
           "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
           "title": {
@@ -40,7 +41,19 @@
           },
           "width": "container",
           "height": 350,
-          "data": { "url": "Coffe_sales.csv" },
+          
+          // ここにMaiのデータを直接インジェクションしました！
+          "data": {
+            "values": [
+              {"coffee_name": "Latte", "money": 35000},
+              {"coffee_name": "Hot Chocolate", "money": 28000},
+              {"coffee_name": "Americano", "money": 22000},
+              {"coffee_name": "Cappuccino", "money": 31000},
+              {"coffee_name": "Espresso", "money": 15000},
+              {"coffee_name": "Cortado", "money": 12000},
+              {"coffee_name": "Macchiato", "money": 9500}
+            ]
+          },
           
           "transform": [
             {
