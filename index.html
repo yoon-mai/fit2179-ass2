@@ -1,100 +1,125 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>The Heartbeat of Melbourne’s Coffee Culture</title>
-    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-    
-    <style>
-        body { margin: 40px; font-family: sans-serif; background-color: #fcfaf2; }
-        .content { max-width: 900px; margin: 0 auto; }
-        h1 { color: #4a3525; margin-bottom: 5px; }
-        .subtitle { color: #6d5440; font-size: 1.2em; margin-bottom: 30px; }
-        .chart-box { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 30px; min-height: 350px; }
-        h2 { color: #5c4033; border-bottom: 2px solid #d2b48c; padding-bottom: 8px; }
-    </style>
+  <meta charset="UTF-8">
+  <title>Melbourne Coffee Culture</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <style>
+    body {
+      margin: 40px;
+      font-family: sans-serif;
+      background-color: #fcfaf2;
+    }
+
+    .content {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: #4a3525;
+      font-size: 56px;
+      line-height: 1.1;
+    }
+
+    p {
+      font-size: 22px;
+    }
+
+    .chart-box {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+  </style>
 </head>
+
 <body>
+  <div class="content">
+    <h1>The Heartbeat of<br>Melbourne’s Coffee Culture ☕</h1>
 
-    <div class="content">
-        <h1>The Heartbeat of Melbourne’s Coffee Culture ☕</h1>
-        <div class="subtitle">An Interactive Exploration of City Cafés and Consumption Trends</div>
-        
-        <h2>1. Coffee Consumption Insights</h2>
-        <p>Maiの売上データから抽出した、メルボルンで最も人気のあるコーヒーの売上ランキングです。</p>
-        <div id="vis1" class="chart-box"></div>
-    </div>
+    <p>曜日ごとに、どのコーヒーがよく売れているかを見てみる！</p>
 
-    <script>
-        // ファイルを読み込まず、データをコードに直接埋め込むスタイル（絶対バグらない！）
-        const salesSpec = {
-          "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-          "title": {
-            "text": "Most Popular Brews by Total Revenue",
-            "subtitle": "Analyzing sales across different coffee types in Melbourne",
-            "font": "sans-serif",
-            "fontSize": 16,
-            "anchor": "start",
-            "color": "#4a3525"
-          },
-          "width": "container",
-          "height": 350,
-          
-          // ここにMaiのデータを直接インジェクションしました！
-          "data": {
-            "values": [
-              {"coffee_name": "Latte", "money": 35000},
-              {"coffee_name": "Hot Chocolate", "money": 28000},
-              {"coffee_name": "Americano", "money": 22000},
-              {"coffee_name": "Cappuccino", "money": 31000},
-              {"coffee_name": "Espresso", "money": 15000},
-              {"coffee_name": "Cortado", "money": 12000},
-              {"coffee_name": "Macchiato", "money": 9500}
-            ]
-          },
-          
-          "transform": [
+    <div id="vis1" class="chart-box"></div>
+  </div>
+
+  <script>
+    const spec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+      "title": {
+        "text": "Coffee Sales by Weekday",
+        "subtitle": "Number of orders for each coffee type by day of the week",
+        "anchor": "start",
+        "fontSize": 20,
+        "color": "#4a3525"
+      },
+
+      "width": 850,
+      "height": 420,
+
+      "data": {
+        "url": "Coffe_sales.csv",
+        "format": {"type": "csv"}
+      },
+
+      "transform": [
+        {
+          "aggregate": [
             {
-              "aggregate": [{"op": "sum", "field": "money", "as": "total_revenue"}],
-              "groupby": ["coffee_name"]
+              "op": "count",
+              "as": "orders"
             }
           ],
-          
-          "mark": {
-            "type": "bar", 
-            "color": "#6F4E37", 
-            "cornerRadiusEnd": 4 
-          },
-          
-          "encoding": {
-            "y": {
-              "field": "coffee_name", 
-              "type": "nominal", 
-              "sort": "-x", 
-              "axis": {
-                "title": "Coffee Type",
-                "labelFontSize": 12
-              }
-            },
-            "x": {
-              "field": "total_revenue", 
-              "type": "quantitative", 
-              "axis": {
-                "title": "Total Revenue ($)",
-                "grid": true,
-                "format": "$,.0f" 
-              }
-            },
-            "tooltip": [
-              {"field": "coffee_name", "type": "nominal", "title": "Coffee"},
-              {"field": "total_revenue", "type": "quantitative", "title": "Total Revenue", "format": "$,.2f"}
-            ]
-          }
-        };
+          "groupby": ["Weekday", "Weekdaysort", "coffee_name"]
+        }
+      ],
 
-        vegaEmbed('#vis1', salesSpec).catch(console.error);
-    </script>
+      "mark": {
+        "type": "bar"
+      },
+
+      "encoding": {
+        "x": {
+          "field": "Weekday",
+          "type": "ordinal",
+          "sort": {
+            "field": "Weekdaysort",
+            "order": "ascending"
+          },
+          "axis": {
+            "title": "Weekday"
+          }
+        },
+
+        "y": {
+          "field": "orders",
+          "type": "quantitative",
+          "axis": {
+            "title": "Number of Orders"
+          }
+        },
+
+        "color": {
+          "field": "coffee_name",
+          "type": "nominal",
+          "title": "Coffee Name"
+        },
+
+        "tooltip": [
+          {"field": "Weekday", "type": "ordinal", "title": "Weekday"},
+          {"field": "coffee_name", "type": "nominal", "title": "Coffee"},
+          {"field": "orders", "type": "quantitative", "title": "Orders"}
+        ]
+      }
+    };
+
+    vegaEmbed("#vis1", spec);
+  </script>
 </body>
 </html>
