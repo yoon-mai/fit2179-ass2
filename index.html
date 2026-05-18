@@ -120,6 +120,67 @@
     };
 
     vegaEmbed("#vis1", spec);
+
+
+
+
+  
+      const timeSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    
+      "title": {
+        "text": "Coffee Orders by Time of Day",
+        "subtitle": "When do people buy coffee the most?",
+        "anchor": "start",
+        "fontSize": 20,
+        "color": "#4a3525"
+      },
+    
+      "width": 850,
+      "height": 420,
+    
+      "data": {
+        "url": "Coffe_sales.csv",
+        "format": {"type": "csv"}
+      },
+    
+      "transform": [
+        {
+          "aggregate": [{"op": "count", "as": "orders"}],
+          "groupby": ["Time_of_Day", "coffee_name"]
+        }
+      ],
+    
+      "mark": {"type": "bar"},
+    
+      "encoding": {
+        "x": {
+          "field": "Time_of_Day",
+          "type": "ordinal",
+          "axis": {"title": "Time of Day"}
+        },
+    
+        "y": {
+          "field": "orders",
+          "type": "quantitative",
+          "axis": {"title": "Number of Orders"}
+        },
+    
+        "color": {
+          "field": "coffee_name",
+          "type": "nominal",
+          "title": "Coffee Name"
+        },
+    
+        "tooltip": [
+          {"field": "Time_of_Day", "type": "ordinal", "title": "Time of Day"},
+          {"field": "coffee_name", "type": "nominal", "title": "Coffee"},
+          {"field": "orders", "type": "quantitative", "title": "Orders"}
+        ]
+      }
+    };
+
+  vegaEmbed("#vis2", timeSpec);
   </script>
 </body>
 </html>
