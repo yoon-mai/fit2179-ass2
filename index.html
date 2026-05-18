@@ -250,9 +250,9 @@
 
 vegaEmbed("#vis3", dateSpec);
 
-    const mapSpec = {
+ const mapSpec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": "container",
+  "width": 850,
   "height": 500,
 
   "params": [
@@ -268,66 +268,56 @@ vegaEmbed("#vis3", dateSpec);
     }
   ],
 
-  "layer": [
-    {
-      "data": {
-        "url": "https://raw.githubusercontent.com/tonywr71/GeoJson-Data/master/melbourne-clue-suburbs.geojson",
-        "format": {"type": "json", "property": "features"}
-      },
-      "projection": {"type": "mercator"},
-      "mark": {
-        "type": "geoshape",
-        "fill": "#eae5d9",
-        "stroke": "#ffffff",
-        "strokeWidth": 1.5
-      }
+  "data": {
+    "url": "melbourne_cafes_2024.csv",
+    "format": {"type": "csv"}
+  },
+
+  "transform": [
+    {"filter": "datum.Latitude != null && datum.Longitude != null"},
+    {"filter": {"param": "seating_select"}}
+  ],
+
+  "projection": {
+    "type": "mercator"
+  },
+
+  "mark": {
+    "type": "circle",
+    "opacity": 0.45,
+    "stroke": "#4a3525",
+    "strokeWidth": 0.4
+  },
+
+  "encoding": {
+    "longitude": {
+      "field": "Longitude",
+      "type": "quantitative"
     },
-    {
-      "data": {
-        "url": "melbourne_cafes_2024.csv",
-        "format": {"type": "csv"}
-      },
-      "transform": [
-        {"filter": {"param": "seating_select"}},
-        {"filter": "datum.Latitude != null && datum.Longitude != null"}
-      ],
-      "projection": {"type": "mercator"},
-      "mark": {
-        "type": "circle",
-        "opacity": 0.6,
-        "stroke": "#4a3525",
-        "strokeWidth": 0.5
-      },
-      "encoding": {
-        "longitude": {
-          "field": "Longitude",
-          "type": "quantitative"
-        },
-        "latitude": {
-          "field": "Latitude",
-          "type": "quantitative"
-        },
-        "size": {
-          "field": "Number of seats",
-          "type": "quantitative",
-          "scale": {"range": [10, 300]},
-          "legend": {"title": "Seating Capacity"}
-        },
-        "color": {
-          "field": "CLUE small area",
-          "type": "nominal",
-          "legend": {"title": "Melbourne Area"}
-        },
-        "tooltip": [
-          {"field": "Trading name", "type": "nominal", "title": "Café Name"},
-          {"field": "Business address", "type": "nominal", "title": "Address"},
-          {"field": "CLUE small area", "type": "nominal", "title": "Area"},
-          {"field": "Seating type", "type": "nominal", "title": "Type"},
-          {"field": "Number of seats", "type": "quantitative", "title": "Seats"}
-        ]
-      }
-    }
-  ]
+    "latitude": {
+      "field": "Latitude",
+      "type": "quantitative"
+    },
+    "size": {
+      "field": "Number of seats",
+      "type": "quantitative",
+      "scale": {"range": [10, 250]},
+      "legend": {"title": "Seats"}
+    },
+    "color": {
+      "field": "CLUE small area",
+      "type": "nominal",
+      "legend": {"title": "Area"}
+    },
+    "tooltip": [
+      {"field": "Census year", "type": "ordinal", "title": "Year"},
+      {"field": "CLUE small area", "type": "nominal", "title": "Area"},
+      {"field": "Seating type", "type": "nominal", "title": "Seating Type"},
+      {"field": "Number of seats", "type": "quantitative", "title": "Seats"},
+      {"field": "Longitude", "type": "quantitative", "title": "Longitude"},
+      {"field": "Latitude", "type": "quantitative", "title": "Latitude"}
+    ]
+  }
 };
 
 vegaEmbed("#vis4", mapSpec).catch(console.error);
