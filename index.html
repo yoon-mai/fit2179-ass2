@@ -19,7 +19,7 @@
     }
 
     .content {
-      max-width: 1250px;
+      max-width: 1320px;
       margin: 0 auto;
     }
 
@@ -45,33 +45,54 @@
     }
 
     .analysis-section {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 40px;
-      margin-bottom: 40px;
+      display: grid;
+      grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.7fr);
+      gap: 34px;
+      margin-bottom: 34px;
       background: #ffffff;
-      padding: 30px;
-      border-radius: 12px;
+      padding: 32px;
+      border-radius: 14px;
       box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      box-sizing: border-box;
+      width: 100%;
+      align-items: stretch;
     }
 
     .text-side {
-      flex: 1;
-      min-width: 320px;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .chart-side {
-      flex: 1.6;
+      min-width: 0;
+      width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       background: #fafafa;
-      padding: 15px;
-      border-radius: 8px;
+      padding: 18px;
+      border-radius: 10px;
       border: 1px solid #eee;
+      box-sizing: border-box;
+      overflow-x: auto;
+      overflow-y: visible;
+    }
+
+    .chart-side > div {
+      max-width: 100%;
+    }
+
+    .vega-embed {
+      max-width: 100%;
+    }
+
+    @media (max-width: 980px) {
+      .analysis-section {
+        grid-template-columns: 1fr;
+      }
     }
 
     h2 {
@@ -99,6 +120,73 @@
       border-radius: 4px;
       border: 1px solid #ccc;
     }
+
+    .intro-card {
+      background: #fff8ee;
+      border-left: 5px solid #8b5a2b;
+      padding: 22px 26px;
+      border-radius: 10px;
+      margin: 28px 0 36px 0;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+    }
+
+    .intro-card p {
+      font-size: 16px;
+      margin: 0;
+      text-align: left;
+    }
+
+    .part-label {
+      color: #8b5a2b;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 44px 0 4px 0;
+    }
+
+    .part-title {
+      color: #4a3525;
+      font-size: 28px;
+      margin: 0 0 10px 0;
+      border-bottom: 3px solid #8b5a2b;
+      padding-bottom: 10px;
+    }
+
+    .part-description {
+      max-width: 960px;
+      margin: 0 0 22px 0;
+      color: #5d5148;
+      font-size: 16px;
+      text-align: left;
+    }
+
+    .section-kicker {
+      display: inline-block;
+      color: #8b5a2b;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .key-stat {
+      background: #f4eadc;
+      border-left: 4px solid #6f4e37;
+      padding: 12px 14px;
+      margin-top: 18px;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #3d2b20;
+    }
+
+    .chart-note {
+      font-size: 12px;
+      color: #777;
+      margin-top: 8px;
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -107,14 +195,27 @@
     
     <header>
       <h1>The Heartbeat of Melbourne’s Coffee Culture ☕</h1>
-      <div class="main-subtitle">An Advanced Deca-Dataset Dashboard of Consumption Patterns and Spatial Analytics</div>
+      <div class="main-subtitle">How time, drink choice, and place shape Melbourne's cafe habits</div>
     </header>
+
+    <div class="intro-card">
+      <p>
+        Melbourne's coffee culture is not just about what people drink. It follows a clear rhythm across the week, peaks sharply in the morning, and is shaped by where cafes are located and how much seating they provide. This visualisation follows that story from daily demand to neighbourhood-level cafe spaces.
+      </p>
+    </div>
+
+    <div class="part-label">Part 1</div>
+    <h2 class="part-title">The Rhythm of Coffee Demand</h2>
+    <p class="part-description">
+      The story begins with time. Melbourne's coffee demand is not random: it follows weekly routines, morning rush hours, and day-to-day fluctuations that reflect work, study, and commuting patterns.
+    </p>
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section 1: Weekly Coffee Rhythms</h2>
+        <span class="section-kicker">Section 1 · Weekly pattern</span>
+        <h2>Weekly Coffee Rhythms</h2>
         <p>
-          Melbourne's coffee consumption follows a highly distinct weekly rhythm driven by the city's unique work-and-leisure culture. Looking at the weekly distribution, daily order volumes tend to remain consistently high from Monday through Friday, peaking on late weekdays as office workers fuel their routines. Interestingly, despite Melbourne's famous weekend brunch scene, cafe transactions see a slight drop on Saturdays and Sundays, suggesting that corporate commuter crowds heavily dictate the baseline volume of the city's espresso bars.
+          Melbourne's coffee consumption follows a distinct weekly rhythm. Orders remain strong across weekdays, showing how much the city's coffee habit is connected to work and study routines. The weekend drop suggests that commuter traffic is a major driver of everyday cafe demand.
         </p>
       </div>
       <div class="chart-side">
@@ -124,9 +225,10 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section 2: The Daily Caffeine Peak</h2>
+        <span class="section-kicker">Section 2 · Morning rush</span>
+        <h2>The Daily Caffeine Peak</h2>
         <p>
-          Timing is everything when it comes to caffeine. The data captures a massive surge in coffee purchases during the <strong>Morning</strong> hours, making up the vast majority of daily sales. This perfectly aligns with the rush-hour window where locals grab their morning brew on the way to university or work. As the day transitions into the <strong>Afternoon</strong>, orders taper off significantly, shifting toward sweeter, comforting choices like Hot Chocolate or Cocoa, before dropping to minimal numbers by evening.
+          The strongest signal appears when orders are grouped by time of day. Morning purchases dominate the dataset, matching the rush-hour window where people buy coffee before work, university, or daily activities.
         </p>
       </div>
       <div class="chart-side">
@@ -136,45 +238,10 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section 3: Daily Transaction Trends</h2>
+        <span class="section-kicker">Section 3 · Hour-by-hour history</span>
+        <h2>Hourly Distribution of Sales</h2>
         <p>
-          Tracking coffee orders on a day-to-day timeline reveals the fluid nature of local demand. Daily transaction totals showcase sharp cyclical spikes and dips, corresponding to the weekly transitions between workdays and weekends. These patterns demonstrate just how deeply integrated cafe visits are within the everyday lifestyle of Melburnians, acting as a reliable barometer for the city's daily movement and public activity.
-        </p>
-      </div>
-      <div class="chart-side">
-        <div id="vis3"></div>
-      </div>
-    </div>
-
-    <div class="analysis-section">
-      <div class="text-side">
-        <h2>Section 4: Popularity of Beverage Types</h2>
-        <p>
-          When analyzing the market share of specific drinks, certain classics dominate Melbourne's espresso bars. This chart highlights the absolute popularity breakdown across all transactions. Regular milk-based coffees and traditional black coffee selections capture the lion's share, while specialty items and alternative comfort drinks like Cocoa represent strategic niche preferences that help cafes diversify their menu appeal.
-        </p>
-      </div>
-      <div class="chart-side">
-        <div id="vis_added_1"></div>
-      </div>
-    </div>
-
-    <div class="analysis-section">
-      <div class="text-side">
-        <h2>Section 5: Transaction Value Distribution</h2>
-        <p>
-          Understanding how much customers spend per transaction provides vital operational insights. The distribution of card transaction values reveals a heavily concentrated peak in the standard coffee price bracket. This steady, highly predictable ticket size underscores the high-frequency, low-investment nature of daily coffee purchases, illustrating how micro-transactions aggregate into massive economic value for local businesses.
-        </p>
-      </div>
-      <div class="chart-side">
-        <div id="vis_added_2"></div>
-      </div>
-    </div>
-
-    <div class="analysis-section">
-      <div class="text-side">
-        <h2>Section 6: Hourly Distribution of Sales</h2>
-        <p>
-          Zooming into an hourly breakdown reveals the precise operational windows that define a cafe's business day. Transaction volume explodes between 8:00 AM and 11:00 AM, matching the intense workflow of morning routines. By tracing the exact hour of operations, businesses can dynamically manage staffing levels, optimize inventory replenishment, and plan precise marketing campaigns to target afternoon lulls.
+          Looking more closely across the day shows exactly when cafes need to be ready for demand. The peak hour is annotated on the chart so the key number is visible immediately, rather than only being explained in the paragraph.
         </p>
       </div>
       <div class="chart-side">
@@ -184,9 +251,61 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section 7: Geographic Distribution</h2>
+        <span class="section-kicker">Section 4 · Daily trend</span>
+        <h2>Daily Transaction Trends</h2>
         <p>
-          Geographically, the dense clusters of dining spaces illustrate why Melbourne is heralded as a global coffee capital. The <strong>Melbourne CBD</strong> holds the highest density of cafes, acting as the epicenter of hospitality. Interestingly, the data shows a strong contrast in seating preference: while corporate hubs in the CBD favor massive indoor seating capacities to accommodate business meetings and rainy winter days, neighboring cultural precincts like Carlton and Docklands offer unique outdoor pockets, creating a diverse spatial landscape for coffee lovers.
+          Across the full timeline, daily totals rise and fall in repeated cycles. The annotated peak helps turn the line chart into a small story: demand changes day by day, but certain dates stand out as unusually busy.
+        </p>
+      </div>
+      <div class="chart-side">
+        <div id="vis3"></div>
+      </div>
+    </div>
+
+    <div class="part-label">Part 2</div>
+    <h2 class="part-title">What Melbourne Chooses to Drink</h2>
+    <p class="part-description">
+      After understanding when people buy coffee, the next question is what they choose. This section shifts from time patterns to product preference and spending behaviour.
+    </p>
+
+    <div class="analysis-section">
+      <div class="text-side">
+        <span class="section-kicker">Section 5 · Coffee popularity</span>
+        <h2>Popularity of Beverage Types</h2>
+        <p>
+          The ranking highlights which drinks dominate Melbourne's cafe transactions. Direct labels on the bars make the most popular items easier to compare without forcing readers to estimate values from the axis.
+        </p>
+      </div>
+      <div class="chart-side">
+        <div id="vis_added_1"></div>
+      </div>
+    </div>
+
+    <div class="analysis-section">
+      <div class="text-side">
+        <span class="section-kicker">Section 6 · Spending pattern</span>
+        <h2>Transaction Value Distribution</h2>
+        <p>
+          The spending distribution shows the small but repeated purchases that define everyday cafe culture. Most transactions cluster around standard coffee prices, showing how frequent low-value sales can still form a major local economy.
+        </p>
+      </div>
+      <div class="chart-side">
+        <div id="vis_added_2"></div>
+      </div>
+    </div>
+
+    <div class="part-label">Part 3</div>
+    <h2 class="part-title">Where Coffee Culture Lives</h2>
+    <p class="part-description">
+      The final part moves from transactions to place. It explores where cafes are located, how much seating they provide, and which neighbourhoods appear most concentrated.
+    </p>
+
+    <div class="analysis-section">
+      <div class="text-side">
+        <span class="section-kicker">Section 7 · Cafe map</span>
+        <h2>Geographic Distribution</h2>
+        <p>
+          The map shows how cafes cluster across central Melbourne. The seating filter adds interactivity, allowing the viewer to compare indoor and outdoor cafe spaces rather than only seeing a static location plot.
         </p>
       </div>
       <div class="chart-side">
@@ -196,9 +315,10 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section 8: Average Seating Capacity by Suburb</h2>
+        <span class="section-kicker">Section 8 · Venue scale</span>
+        <h2>Average Seating Capacity by Suburb</h2>
         <p>
-          Spatial dynamics vary deeply when looking at individual suburb layouts. By aggregating cafe seating metrics, we can identify which neighborhoods support large-scale hospitality hubs versus intimate boutique espresso spots. Areas featuring higher average seating metrics typically point to high-volume commercial districts, while smaller averages characterize residential or artistic lanes where compact storefronts define the community.
+          Seating capacity gives another way to understand cafe geography. Larger averages may suggest high-volume commercial districts, while smaller averages can indicate more compact neighbourhood or laneway-style cafe spaces.
         </p>
       </div>
       <div class="chart-side">
@@ -208,9 +328,10 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section 9: Indoor vs. Outdoor Seating Proportions</h2>
+        <span class="section-kicker">Section 9 · Indoor vs outdoor</span>
+        <h2>Indoor vs. Outdoor Seating Proportions</h2>
         <p>
-          Melbourne's unpredictable weather dictates how commercial dining spaces structure their layout. This macro comparison highlights the total infrastructure balance between indoor and outdoor dining configurations. The substantial reliance on indoor spaces highlights the necessity of providing climate-controlled year-round comfort, while the dedicated outdoor sector highlights the urban alfresco culture that thrives during pleasant summer months.
+          Melbourne's changing weather shapes how cafes organise their seating. Comparing indoor and outdoor capacity helps explain whether cafe spaces are designed more for year-round comfort or alfresco culture.
         </p>
       </div>
       <div class="chart-side">
@@ -220,9 +341,10 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section 10: Neighborhood Cafe Density</h2>
+        <span class="section-kicker">Section 10 · Neighbourhood density</span>
+        <h2>Neighborhood Cafe Density</h2>
         <p>
-          Market saturation and commercial competition become immediately evident when counting individual venues across small administrative sectors. This density matrix ranks districts based on sheer venue volume. The resulting breakdown serves as a clear indicator of commercial real estate demand, helping researchers and prospective entrepreneurs pinpoint hyper-competitive hotspots versus emerging spatial opportunities.
+          The final chart summarises the spatial story by ranking areas according to venue count. This shows where coffee culture is most concentrated and where competition between cafes is likely to be strongest.
         </p>
       </div>
       <div class="chart-side">
@@ -233,13 +355,14 @@
   </div>
 
   <script>
-    const chartWidth = 520;
+    const chartWidth = 620;
 
     // 1. 曜日別グラフ
     const spec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": chartWidth, "height": 300,
       "data": { "url": "Coffe_sales.csv", "format": {"type": "csv"} },
+      "title": {"text": "Orders by Weekday", "subtitle": "Weekday demand remains stronger than weekend demand"},
       "transform": [{ "aggregate": [{"op": "count", "as": "orders"}], "groupby": ["Weekday", "Weekdaysort", "coffee_name"] }],
       "mark": {"type": "bar"},
       "encoding": {
@@ -256,6 +379,7 @@
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": chartWidth, "height": 300,
       "data": { "url": "Coffe_sales.csv", "format": {"type": "csv"} },
+      "title": {"text": "Orders by Time of Day", "subtitle": "Morning demand dominates the day"},
       "transform": [{ "aggregate": [{"op": "count", "as": "orders"}], "groupby": ["Time_of_Day", "coffee_name"] }],
       "mark": {"type": "bar"},
       "encoding": {
@@ -272,13 +396,35 @@
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": chartWidth, "height": 280,
       "data": { "url": "Coffe_sales.csv", "format": {"type": "csv"} },
+      "title": {"text": "Daily Coffee Orders", "subtitle": "Peak day is annotated directly on the chart"},
       "transform": [{ "aggregate": [{"op": "count", "as": "orders"}], "groupby": ["Date"] }],
-      "mark": { "type": "line", "point": true, "color": "#6F4E37" },
-      "encoding": {
-        "x": { "field": "Date", "type": "temporal", "axis": { "title": "Date", "format": "%b %d", "labelAngle": -45 } },
-        "y": { "field": "orders", "type": "quantitative", "axis": {"title": "Total Daily Orders"} },
-        "tooltip": [{"field": "Date", "type": "temporal"}, {"field": "orders", "type": "quantitative"}]
-      }
+      "layer": [
+        {
+          "mark": { "type": "line", "point": true, "color": "#6F4E37" },
+          "encoding": {
+            "x": { "field": "Date", "type": "temporal", "axis": { "title": "Date", "format": "%b %d", "labelAngle": -45 } },
+            "y": { "field": "orders", "type": "quantitative", "axis": {"title": "Total Daily Orders"} },
+            "tooltip": [{"field": "Date", "type": "temporal"}, {"field": "orders", "type": "quantitative"}]
+          }
+        },
+        {
+          "transform": [
+            { "window": [{"op": "rank", "as": "rank"}], "sort": [{"field": "orders", "order": "descending"}] },
+            { "filter": "datum.rank == 1" }
+          ],
+          "mark": {"type": "point", "filled": true, "size": 90, "color": "#a0522d"},
+          "encoding": {"x": {"field": "Date", "type": "temporal"}, "y": {"field": "orders", "type": "quantitative"}}
+        },
+        {
+          "transform": [
+            { "window": [{"op": "rank", "as": "rank"}], "sort": [{"field": "orders", "order": "descending"}] },
+            { "filter": "datum.rank == 1" },
+            { "calculate": "'Peak: ' + datum.orders + ' orders'", "as": "label" }
+          ],
+          "mark": {"type": "text", "align": "left", "baseline": "bottom", "dx": 8, "dy": -8, "fontWeight": "bold", "color": "#4a3525"},
+          "encoding": {"x": {"field": "Date", "type": "temporal"}, "y": {"field": "orders", "type": "quantitative"}, "text": {"field": "label"}}
+        }
+      ]
     };
     vegaEmbed("#vis3", dateSpec, {"actions": false});
 
@@ -287,13 +433,27 @@
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": chartWidth, "height": 280,
       "data": { "url": "Coffe_sales.csv", "format": {"type": "csv"} },
-      "mark": {"type": "bar"},
-      "encoding": {
-        "y": { "field": "coffee_name", "type": "nominal", "sort": "-x", "axis": {"title": "Coffee Type"} },
-        "x": { "aggregate": "count", "type": "quantitative", "axis": {"title": "Total Units Sold"} },
-        "color": { "field": "coffee_name", "type": "nominal", "legend": null, "scale": {"scheme": "category10"} },
-        "tooltip": [{"field": "coffee_name", "title": "Coffee"}, {"aggregate": "count", "title": "Total Sold"}]
-      }
+      "title": {"text": "Most Ordered Coffee Types", "subtitle": "Labels show total transactions by drink"},
+      "transform": [{ "aggregate": [{"op": "count", "as": "total_sold"}], "groupby": ["coffee_name"] }],
+      "layer": [
+        {
+          "mark": {"type": "bar"},
+          "encoding": {
+            "y": { "field": "coffee_name", "type": "nominal", "sort": "-x", "axis": {"title": "Coffee Type"} },
+            "x": { "field": "total_sold", "type": "quantitative", "axis": {"title": "Total Units Sold"} },
+            "color": { "field": "coffee_name", "type": "nominal", "legend": null, "scale": {"scheme": "category10"} },
+            "tooltip": [{"field": "coffee_name", "title": "Coffee"}, {"field": "total_sold", "title": "Total Sold"}]
+          }
+        },
+        {
+          "mark": {"type": "text", "align": "left", "baseline": "middle", "dx": 4, "fontSize": 12, "color": "#333"},
+          "encoding": {
+            "y": { "field": "coffee_name", "type": "nominal", "sort": "-x" },
+            "x": { "field": "total_sold", "type": "quantitative" },
+            "text": { "field": "total_sold", "type": "quantitative" }
+          }
+        }
+      ]
     };
     vegaEmbed("#vis_added_1", addedSpec1, {"actions": false});
 
@@ -316,12 +476,27 @@
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": chartWidth, "height": 280,
       "data": { "url": "Coffe_sales.csv", "format": {"type": "csv"} },
-      "mark": {"type": "area", "color": "#b5651d", "opacity": 0.7},
-      "encoding": {
-        "x": { "field": "hour_of_day", "type": "ordinal", "axis": {"title": "Hour of Day (24h)"} },
-        "y": { "aggregate": "count", "type": "quantitative", "axis": {"title": "Orders Count"} },
-        "tooltip": [{"field": "hour_of_day", "title": "Hour"}, {"aggregate": "count", "title": "Orders"}]
-      }
+      "title": {"text": "Hourly Distribution of Orders", "subtitle": "The main rush hour is highlighted"},
+      "transform": [{ "aggregate": [{"op": "count", "as": "orders"}], "groupby": ["hour_of_day"] }],
+      "layer": [
+        {
+          "mark": {"type": "area", "color": "#b5651d", "opacity": 0.7},
+          "encoding": {
+            "x": { "field": "hour_of_day", "type": "ordinal", "axis": {"title": "Hour of Day (24h)"} },
+            "y": { "field": "orders", "type": "quantitative", "axis": {"title": "Orders Count"} },
+            "tooltip": [{"field": "hour_of_day", "title": "Hour"}, {"field": "orders", "title": "Orders"}]
+          }
+        },
+        {
+          "transform": [
+            { "window": [{"op": "rank", "as": "rank"}], "sort": [{"field": "orders", "order": "descending"}] },
+            { "filter": "datum.rank == 1" },
+            { "calculate": "'Peak hour: ' + datum.hour_of_day + ':00'", "as": "label" }
+          ],
+          "mark": {"type": "text", "align": "center", "baseline": "bottom", "dy": -10, "fontWeight": "bold", "color": "#4a3525"},
+          "encoding": {"x": {"field": "hour_of_day", "type": "ordinal"}, "y": {"field": "orders", "type": "quantitative"}, "text": {"field": "label"}}
+        }
+      ]
     };
     vegaEmbed("#vis_added_3", addedSpec3, {"actions": false});
 
