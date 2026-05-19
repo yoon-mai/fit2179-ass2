@@ -281,7 +281,8 @@
           <h3>Venue density closes the spatial story</h3>
           <p>The final ranking summarises where cafe culture is most concentrated. It acts as a closing view of market density and neighbourhood-level competition.</p>
         </div>
-        <div class="story-chart full-width"><div id="vis_added_6"></div></div>
+        <div class="story-chart full-width"><div id="vis_added_6"></div>
+        <div class="story-chart full-width"><div id="vis_added_7"></div></div>
       </div>
     </section>
   </div>
@@ -524,6 +525,49 @@
     };
     vegaEmbed("#vis_added_6", addedSpec6, {"actions": false});
 
-  </script>
+    // 【新グラフ】曜日 × 時間帯のIntersectヒートマップ
+const intersectSpec1 = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": chartWidth,
+  "height": 280,
+  "data": { "url": "Coffe_sales.csv", "format": {"type": "csv"} },
+  "transform": [
+    {
+      "aggregate": [{"op": "count", "as": "orders"}],
+      "groupby": ["Weekday", "Weekdaysort", "Time_of_Day"]
+    }
+  ],
+  "mark": "rect", // マス目を塗りつぶす設定
+  "encoding": {
+    "x": {
+      "field": "Weekday",
+      "type": "ordinal",
+      "sort": {"field": "Weekdaysort"},
+      "axis": {"title": "Weekday", "labelAngle": 0}
+    },
+    "y": {
+      "field": "Time_of_Day",
+      "type": "nominal",
+      "sort": ["Morning", "Afternoon", "Evening", "Night"],
+      "axis": {"title": "Time of Day"}
+    },
+    "color": {
+      "field": "orders",
+      "type": "quantitative",
+      "scale": {"scheme": "browns"}, // コーヒーっぽい茶色のグラデーション
+      "legend": {"title": "Order Volume"}
+    },
+    "tooltip": [
+      {"field": "Weekday", "title": "Day"},
+      {"field": "Time_of_Day", "title": "Time"},
+      {"field": "orders", "title": "Total Orders", "type": "quantitative"}
+    ]
+  },
+  "config": {
+    "view": {"stroke": "transparent"}
+  }
+};
+vegaEmbed("vis_added_7", intersectSpec1, {"actions": false});
+  </scrip
 </body>
 </html>
