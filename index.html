@@ -382,9 +382,8 @@ const mapSpec = {
       }
     ]
   }
-};
-
-    ,
+}
+  ,
 "config": {
   "view": {
     "stroke": "#cccccc"
@@ -396,7 +395,11 @@ const mapSpec = {
     "tickColor": "#999999",
     "domainColor": "#999999"
   }
-}
+},
+    "view": {
+  "stroke": "#cccccc",
+  "fill": "#f8f5ed"
+};
     
 vegaEmbed("#vis4", mapSpec).catch(console.error);
   </script>
