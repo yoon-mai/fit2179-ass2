@@ -255,7 +255,7 @@
     };
     vegaEmbed("#vis3", dateSpec).catch(console.error);
 
-    // 4. 地図グラフ (外部接続エラーを完全に排除したセーフモード版)
+    // 4. 地図グラフ【メルボルン特化・境界線のグリッド背景版】
     const mapSpec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "title": {
@@ -267,6 +267,7 @@
       },
       "width": 800,
       "height": 500,
+      
       "params": [
         {
           "name": "seating_select",
@@ -287,36 +288,56 @@
         {"filter": "datum.Latitude != null && datum.Longitude != null"},
         {"filter": {"param": "seating_select"}}
       ],
+      
+      // ココが超重要！メルボルンCBD周辺（緯度-37.81, 経度144.96）に超ドアップでズーム固定します
       "projection": {
-        "type": "mercator"
+        "type": "mercator",
+        "center": [144.9631, -37.8136], 
+        "scale": 180000 
       },
-      "mark": {
-        "type": "circle",
-        "opacity": 0.55,
-        "stroke": "#4a3525",
-        "strokeWidth": 0.4
-      },
-      "encoding": {
-        "longitude": { "field": "Longitude", "type": "quantitative" },
-        "latitude": { "field": "Latitude", "type": "quantitative" },
-        "size": {
-          "field": "Number of seats",
-          "type": "quantitative",
-          "scale": {"range": [10, 250]},
-          "legend": {"title": "Seats Capacity"}
+      
+      "layer": [
+        {
+          // 【新機能】背景に位置関係がわかる綺麗な「緯度経度の境界線（グリッドライン）」を描画します
+          "mark": {
+            "type": "graticule",
+            "step": [0.02, 0.02], 
+            "stroke": "#dcd7ca",
+            "strokeWidth": 0.8
+          }
         },
-        "color": {
-          "field": "CLUE small area",
-          "type": "nominal",
-          "legend": {"title": "Area"}
-        },
-        "tooltip": [
-          {"field": "Trading name", "type": "nominal", "title": "Cafe Name"},
-          {"field": "CLUE small area", "type": "nominal", "title": "Area"},
-          {"field": "Seating type", "type": "nominal", "title": "Seating Type"},
-          {"field": "Number of seats", "type": "quantitative", "title": "Seats"}
-        ]
-      }
+        {
+          // カフェのプロット点
+          "mark": {
+            "type": "circle",
+            "opacity": 0.6,
+            "stroke": "#4a3525",
+            "strokeWidth": 0.5
+          },
+          "encoding": {
+            "longitude": { "field": "Longitude", "type": "quantitative" },
+            "latitude": { "field": "Latitude", "type": "quantitative" },
+            "size": {
+              "field": "Number of seats",
+              "type": "quantitative",
+              "scale": {"range": [10, 400]}, 
+              "legend": {"title": "Seats Capacity"}
+            },
+            "color": {
+              "field": "CLUE small area",
+              "type": "nominal",
+              "legend": {"title": "Area"},
+              "scale": {"scheme": "category10"}
+            },
+            "tooltip": [
+              {"field": "Trading name", "type": "nominal", "title": "Cafe Name"},
+              {"field": "CLUE small area", "type": "nominal", "title": "Area"},
+              {"field": "Seating type", "type": "nominal", "title": "Seating Type"},
+              {"field": "Number of seats", "type": "quantitative", "title": "Seats"}
+            ]
+          }
+        }
+      ]
     };
     vegaEmbed("#vis4", mapSpec).catch(console.error);
   </script>
