@@ -112,7 +112,7 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section I: Weekly Coffee Rhythms</h2>
+        <h2>Section 1: Weekly Coffee Rhythms</h2>
         <p>
           Melbourne's coffee consumption follows a highly distinct weekly rhythm driven by the city's unique work-and-leisure culture. Looking at the weekly distribution, daily order volumes tend to remain consistently high from Monday through Friday, peaking on late weekdays as office workers fuel their routines. Interestingly, despite Melbourne's famous weekend brunch scene, cafe transactions see a slight drop on Saturdays and Sundays, suggesting that corporate commuter crowds heavily dictate the baseline volume of the city's espresso bars.
         </p>
@@ -124,7 +124,7 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section II: The Daily Caffeine Peak</h2>
+        <h2>Section 2: The Daily Caffeine Peak</h2>
         <p>
           Timing is everything when it comes to caffeine. The data captures a massive surge in coffee purchases during the <strong>Morning</strong> hours, making up the vast majority of daily sales. This perfectly aligns with the rush-hour window where locals grab their morning brew on the way to university or work. As the day transitions into the <strong>Afternoon</strong>, orders taper off significantly, shifting toward sweeter, comforting choices like Hot Chocolate or Cocoa, before dropping to minimal numbers by evening.
         </p>
@@ -136,7 +136,7 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section III: Daily Transaction Trends</h2>
+        <h2>Section 3: Daily Transaction Trends</h2>
         <p>
           Tracking coffee orders on a day-to-day timeline reveals the fluid nature of local demand. Daily transaction totals showcase sharp cyclical spikes and dips, corresponding to the weekly transitions between workdays and weekends. These patterns demonstrate just how deeply integrated cafe visits are within the everyday lifestyle of Melburnians, acting as a reliable barometer for the city's daily movement and public activity.
         </p>
@@ -148,7 +148,7 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section IV: Popularity of Beverage Types</h2>
+        <h2>Section 4: Popularity of Beverage Types</h2>
         <p>
           When analyzing the market share of specific drinks, certain classics dominate Melbourne's espresso bars. This chart highlights the absolute popularity breakdown across all transactions. Regular milk-based coffees and traditional black coffee selections capture the lion's share, while specialty items and alternative comfort drinks like Cocoa represent strategic niche preferences that help cafes diversify their menu appeal.
         </p>
@@ -160,7 +160,7 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section V: Transaction Value Distribution</h2>
+        <h2>Section 5: Transaction Value Distribution</h2>
         <p>
           Understanding how much customers spend per transaction provides vital operational insights. The distribution of card transaction values reveals a heavily concentrated peak in the standard coffee price bracket. This steady, highly predictable ticket size underscores the high-frequency, low-investment nature of daily coffee purchases, illustrating how micro-transactions aggregate into massive economic value for local businesses.
         </p>
@@ -172,7 +172,7 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section VI: Hourly Distribution of Sales</h2>
+        <h2>Section 6: Hourly Distribution of Sales</h2>
         <p>
           Zooming into an hourly breakdown reveals the precise operational windows that define a cafe's business day. Transaction volume explodes between 8:00 AM and 11:00 AM, matching the intense workflow of morning routines. By tracing the exact hour of operations, businesses can dynamically manage staffing levels, optimize inventory replenishment, and plan precise marketing campaigns to target afternoon lulls.
         </p>
@@ -184,7 +184,7 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section VII: Geographic Distribution</h2>
+        <h2>Section 7: Geographic Distribution</h2>
         <p>
           Geographically, the dense clusters of dining spaces illustrate why Melbourne is heralded as a global coffee capital. The <strong>Melbourne CBD</strong> holds the highest density of cafes, acting as the epicenter of hospitality. Interestingly, the data shows a strong contrast in seating preference: while corporate hubs in the CBD favor massive indoor seating capacities to accommodate business meetings and rainy winter days, neighboring cultural precincts like Carlton and Docklands offer unique outdoor pockets, creating a diverse spatial landscape for coffee lovers.
         </p>
@@ -196,7 +196,7 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section VIII: Average Seating Capacity by Suburb</h2>
+        <h2>Section 8: Average Seating Capacity by Suburb</h2>
         <p>
           Spatial dynamics vary deeply when looking at individual suburb layouts. By aggregating cafe seating metrics, we can identify which neighborhoods support large-scale hospitality hubs versus intimate boutique espresso spots. Areas featuring higher average seating metrics typically point to high-volume commercial districts, while smaller averages characterize residential or artistic lanes where compact storefronts define the community.
         </p>
@@ -208,7 +208,7 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section IX: Indoor vs. Outdoor Seating Proportions</h2>
+        <h2>Section 9: Indoor vs. Outdoor Seating Proportions</h2>
         <p>
           Melbourne's unpredictable weather dictates how commercial dining spaces structure their layout. This macro comparison highlights the total infrastructure balance between indoor and outdoor dining configurations. The substantial reliance on indoor spaces highlights the necessity of providing climate-controlled year-round comfort, while the dedicated outdoor sector highlights the urban alfresco culture that thrives during pleasant summer months.
         </p>
@@ -220,7 +220,7 @@
 
     <div class="analysis-section">
       <div class="text-side">
-        <h2>Section X: Neighborhood Cafe Density</h2>
+        <h2>Section 10: Neighborhood Cafe Density</h2>
         <p>
           Market saturation and commercial competition become immediately evident when counting individual venues across small administrative sectors. This density matrix ranks districts based on sheer venue volume. The resulting breakdown serves as a clear indicator of commercial real estate demand, helping researchers and prospective entrepreneurs pinpoint hyper-competitive hotspots versus emerging spatial opportunities.
         </p>
@@ -245,7 +245,7 @@
       "encoding": {
         "x": { "field": "Weekday", "type": "ordinal", "sort": {"field": "Weekdaysort", "order": "ascending"}, "axis": {"labelAngle": 0} },
         "y": { "field": "orders", "type": "quantitative", "axis": {"title": "Number of Orders"} },
-        "color": { "field": "coffee_name", "type": "nominal", "title": "Coffee Name" },
+        "color": { "field": "coffee_name", "type": "nominal", "title": "Coffee Name", "scale": {"scheme": "category10"} },
         "tooltip": [{"field": "Weekday", "title": "Weekday"}, {"field": "coffee_name", "title": "Coffee"}, {"field": "orders", "type": "quantitative"}]
       }
     };
@@ -261,7 +261,7 @@
       "encoding": {
         "x": { "field": "Time_of_Day", "type": "ordinal", "axis": {"labelAngle": 0} },
         "y": { "field": "orders", "type": "quantitative", "axis": {"title": "Number of Orders"} },
-        "color": { "field": "coffee_name", "type": "nominal", "title": "Coffee Name" },
+        "color": { "field": "coffee_name", "type": "nominal", "title": "Coffee Name", "scale": {"scheme": "category10"} },
         "tooltip": [{"field": "Time_of_Day", "title": "Time"}, {"field": "coffee_name", "title": "Coffee"}, {"field": "orders", "type": "quantitative"}]
       }
     };
@@ -282,21 +282,22 @@
     };
     vegaEmbed("#vis3", dateSpec, {"actions": false});
 
-    // 4. 【新グラフ】コーヒー別販売数横棒グラフ
+    // 4. コーヒー別販売数横棒グラフ（★色をドリンクごとにカラフルに！）
     const addedSpec1 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": chartWidth, "height": 280,
       "data": { "url": "Coffe_sales.csv", "format": {"type": "csv"} },
-      "mark": {"type": "bar", "color": "#8B5A2B"},
+      "mark": {"type": "bar"},
       "encoding": {
         "y": { "field": "coffee_name", "type": "nominal", "sort": "-x", "axis": {"title": "Coffee Type"} },
         "x": { "aggregate": "count", "type": "quantitative", "axis": {"title": "Total Units Sold"} },
+        "color": { "field": "coffee_name", "type": "nominal", "legend": null, "scale": {"scheme": "category10"} },
         "tooltip": [{"field": "coffee_name", "title": "Coffee"}, {"aggregate": "count", "title": "Total Sold"}]
       }
     };
     vegaEmbed("#vis_added_1", addedSpec1, {"actions": false});
 
-    // 5. 【新グラフ】売上金額のヒストグラム分布
+    // 5. 売上金額のヒストグラム分布
     const addedSpec2 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": chartWidth, "height": 280,
@@ -310,7 +311,7 @@
     };
     vegaEmbed("#vis_added_2", addedSpec2, {"actions": false});
 
-    // 6. 【新グラフ】1日の中のより細かな1時間ごとの注文推移
+    // 6. 1日の中のより細かな1時間ごとの注文推移
     const addedSpec3 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": chartWidth, "height": 280,
@@ -369,13 +370,13 @@
     };
     vegaEmbed("#vis4", mapSpec, {"actions": false});
 
-    // 8. 【新グラフ】地域別の平均座席数（バーチャート）
+    // 8. 地域別の平均座席数（★色をカフェゴールドに変更！）
     const addedSpec4 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": chartWidth, "height": 280,
       "data": { "url": "melbourne_cafes_2024.csv", "format": {"type": "csv"} },
       "transform": [{ "aggregate": [{"op": "mean", "field": "Number of seats", "as": "avg_seats"}], "groupby": ["CLUE small area"] }],
-      "mark": {"type": "bar", "color": "#4682B4"},
+      "mark": {"type": "bar", "color": "#966F33"},
       "encoding": {
         "x": { "field": "CLUE small area", "type": "nominal", "axis": {"title": "Area", "labelAngle": -30} },
         "y": { "field": "avg_seats", "type": "quantitative", "axis": {"title": "Average Seating Capacity"} },
@@ -384,27 +385,38 @@
     };
     vegaEmbed("#vis_added_4", addedSpec4, {"actions": false});
 
-    // 9. 【新グラフ】インドア vs アウトドア座席数総計（ドーナツ型パイチャート）
+    // 9. インドア vs アウトドア座席数総計（★文字を円グラフの上に直接重ねて表示！）
     const addedSpec5 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": chartWidth, "height": 280,
       "data": { "url": "melbourne_cafes_2024.csv", "format": {"type": "csv"} },
       "transform": [{ "aggregate": [{"op": "sum", "field": "Number of seats", "as": "total_seats"}], "groupby": ["Seating type"] }],
-      "mark": {"type": "arc", "innerRadius": 50},
-      "encoding": {
-        "theta": {"field": "total_seats", "type": "quantitative"},
-        "color": {"field": "Seating type", "type": "nominal", "scale": {"range": ["#20B2AA", "#FF8C00"]}},
-        "tooltip": [{"field": "Seating type", "title": "Type"}, {"field": "total_seats", "type": "quantitative", "title": "Total Seats"}]
-      }
+      "layer": [
+        {
+          "mark": {"type": "arc", "innerRadius": 50},
+          "encoding": {
+            "theta": {"field": "total_seats", "type": "quantitative"},
+            "color": {"field": "Seating type", "type": "nominal", "scale": {"range": ["#20B2AA", "#FF8C00"]}, "legend": {"title": "Seating Type"}},
+            "tooltip": [{"field": "Seating type", "title": "Type"}, {"field": "total_seats", "type": "quantitative", "title": "Total Seats"}]
+          }
+        },
+        {
+          "mark": {"type": "text", "radius": 90, "fill": "white", "fontSize": 12, "fontWeight": "bold"},
+          "encoding": {
+            "theta": {"field": "total_seats", "type": "quantitative"},
+            "text": {"field": "Seating type", "type": "nominal"}
+          }
+        }
+      ]
     };
     vegaEmbed("#vis_added_5", addedSpec5, {"actions": false});
 
-    // 10. 【新グラフ】地域ごとのカフェ店舗数ランキング（横棒グラフ）
+  // 10. 地域ごとのカフェ店舗数ランキング（★色を温かみのあるブラウンに変更！）
     const addedSpec6 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": chartWidth, "height": 280,
       "data": { "url": "melbourne_cafes_2024.csv", "format": {"type": "csv"} },
-      "mark": {"type": "bar", "color": "#2E8B57"},
+      "mark": {"type": "bar", "color": "#D2691E"},
       "encoding": {
         "y": { "field": "CLUE small area", "type": "nominal", "sort": "-x", "axis": {"title": "Area"} },
         "x": { "aggregate": "count", "type": "quantitative", "axis": {"title": "Number of Venues"} },
