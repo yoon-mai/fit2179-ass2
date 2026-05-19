@@ -282,7 +282,7 @@
     };
     vegaEmbed("#vis3", dateSpec, {"actions": false});
 
-    // 4. コーヒー別販売数横棒グラフ（★色をドリンクごとにカラフルに！）
+    // 4. コーヒー別販売数横棒グラフ（★色をドリンクごとにカラフルに色分け！）
     const addedSpec1 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": chartWidth, "height": 280,
@@ -370,7 +370,7 @@
     };
     vegaEmbed("#vis4", mapSpec, {"actions": false});
 
-    // 8. 地域別の平均座席数（★色をカフェゴールドに変更！）
+    // 8. 地域別の平均座席数（★色を深みのあるカフェゴールド系に変更！）
     const addedSpec4 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": chartWidth, "height": 280,
@@ -385,33 +385,22 @@
     };
     vegaEmbed("#vis_added_4", addedSpec4, {"actions": false});
 
-    // 9. インドア vs アウトドア座席数総計（★文字を円グラフの上に直接重ねて表示！）
+    // 9. インドア vs アウトドア座席数総計
     const addedSpec5 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": chartWidth, "height": 280,
       "data": { "url": "melbourne_cafes_2024.csv", "format": {"type": "csv"} },
       "transform": [{ "aggregate": [{"op": "sum", "field": "Number of seats", "as": "total_seats"}], "groupby": ["Seating type"] }],
-      "layer": [
-        {
-          "mark": {"type": "arc", "innerRadius": 50},
-          "encoding": {
-            "theta": {"field": "total_seats", "type": "quantitative"},
-            "color": {"field": "Seating type", "type": "nominal", "scale": {"range": ["#20B2AA", "#FF8C00"]}, "legend": {"title": "Seating Type"}},
-            "tooltip": [{"field": "Seating type", "title": "Type"}, {"field": "total_seats", "type": "quantitative", "title": "Total Seats"}]
-          }
-        },
-        {
-          "mark": {"type": "text", "radius": 90, "fill": "white", "fontSize": 12, "fontWeight": "bold"},
-          "encoding": {
-            "theta": {"field": "total_seats", "type": "quantitative"},
-            "text": {"field": "Seating type", "type": "nominal"}
-          }
-        }
-      ]
+      "mark": {"type": "arc", "innerRadius": 50},
+      "encoding": {
+        "theta": {"field": "total_seats", "type": "quantitative"},
+        "color": {"field": "Seating type", "type": "nominal", "scale": {"range": ["#20B2AA", "#FF8C00"]}},
+        "tooltip": [{"field": "Seating type", "title": "Type"}, {"field": "total_seats", "type": "quantitative", "title": "Total Seats"}]
+      }
     };
     vegaEmbed("#vis_added_5", addedSpec5, {"actions": false});
 
-  // 10. 地域ごとのカフェ店舗数ランキング（★色を温かみのあるブラウンに変更！）
+    // 10. 地域ごとのカフェ店舗数ランキング（★色を温かみのあるテラコッタブラウンに変更！）
     const addedSpec6 = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": chartWidth, "height": 280,
