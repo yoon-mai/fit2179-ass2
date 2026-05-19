@@ -255,7 +255,8 @@
     };
     vegaEmbed("#vis3", dateSpec).catch(console.error);
 
-   const mapSpec = {
+   // 4. 地図グラフ【メルボルン特化版】
+const mapSpec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
   "title": {
@@ -268,12 +269,6 @@
 
   "width": 800,
   "height": 550,
-
-  "projection": {
-    "type": "mercator",
-    "center": [144.9631, -37.8136],
-    "scale": 180000
-  },
 
   "params": [
     {
@@ -299,112 +294,106 @@
     }
   ],
 
-  "layer": [
+  "data": {
+    "url": "melbourne_cafes_2024.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
 
+  "transform": [
     {
-      "data": {
-        "graticule": {
-          "step": [0.02, 0.02]
-        }
-      },
-
-      "mark": {
-        "type": "geoshape",
-        "stroke": "#d8d2c4",
-        "strokeWidth": 1,
-        "fill": null
-      }
+      "filter": "datum.Latitude != null && datum.Longitude != null"
     },
-
     {
-      "data": {
-        "url": "melbourne_cafes_2024.csv",
-        "format": {
-          "type": "csv"
-        }
-      },
-
-      "transform": [
-        {
-          "filter": "datum.Latitude != null && datum.Longitude != null"
-        },
-        {
-          "filter": {
-            "param": "seating_select"
-          }
-        }
-      ],
-
-      "mark": {
-        "type": "circle",
-        "opacity": 0.65,
-        "stroke": "#4a3525",
-        "strokeWidth": 0.5
-      },
-
-      "encoding": {
-        "longitude": {
-          "field": "Longitude",
-          "type": "quantitative"
-        },
-
-        "latitude": {
-          "field": "Latitude",
-          "type": "quantitative"
-        },
-
-        "size": {
-          "field": "Number of seats",
-          "type": "quantitative",
-          "scale": {
-            "range": [15, 400]
-          },
-          "legend": {
-            "title": "Seats Capacity"
-          }
-        },
-
-        "color": {
-          "field": "CLUE small area",
-          "type": "nominal",
-          "scale": {
-            "scheme": "category10"
-          },
-          "legend": {
-            "title": "Area"
-          }
-        },
-
-        "tooltip": [
-          {
-            "field": "Trading name",
-            "type": "nominal",
-            "title": "Cafe Name"
-          },
-          {
-            "field": "CLUE small area",
-            "type": "nominal",
-            "title": "Area"
-          },
-          {
-            "field": "Seating type",
-            "type": "nominal",
-            "title": "Seating Type"
-          },
-          {
-            "field": "Number of seats",
-            "type": "quantitative",
-            "title": "Seats"
-          }
-        ]
+      "filter": {
+        "param": "seating_select"
       }
     }
   ],
+
+  "projection": {
+    "type": "mercator",
+    "center": [144.9631, -37.8136],
+    "scale": 180000
+  },
+
+  "mark": {
+    "type": "circle",
+    "opacity": 0.65,
+    "stroke": "#4a3525",
+    "strokeWidth": 0.5
+  },
+
+  "encoding": {
+    "longitude": {
+      "field": "Longitude",
+      "type": "quantitative"
+    },
+
+    "latitude": {
+      "field": "Latitude",
+      "type": "quantitative"
+    },
+
+    "size": {
+      "field": "Number of seats",
+      "type": "quantitative",
+      "scale": {
+        "range": [15, 400]
+      },
+      "legend": {
+        "title": "Seats Capacity"
+      }
+    },
+
+    "color": {
+      "field": "CLUE small area",
+      "type": "nominal",
+      "legend": {
+        "title": "Area"
+      },
+      "scale": {
+        "scheme": "category10"
+      }
+    },
+
+    "tooltip": [
+      {
+        "field": "Trading name",
+        "type": "nominal",
+        "title": "Cafe Name"
+      },
+      {
+        "field": "CLUE small area",
+        "type": "nominal",
+        "title": "Area"
+      },
+      {
+        "field": "Seating type",
+        "type": "nominal",
+        "title": "Seating Type"
+      },
+      {
+        "field": "Number of seats",
+        "type": "quantitative",
+        "title": "Seats"
+      }
+    ]
+  },
 
   "config": {
     "view": {
       "stroke": "#cccccc",
       "fill": "#f8f5ed"
+    },
+
+    "axis": {
+      "grid": true,
+      "gridColor": "#d9d9d9",
+      "gridOpacity": 0.6,
+      "tickColor": "#999999",
+      "domainColor": "#999999"
     }
   }
 };
