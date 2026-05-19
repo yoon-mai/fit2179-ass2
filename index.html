@@ -255,7 +255,7 @@
     };
     vegaEmbed("#vis3", dateSpec).catch(console.error);
 
-    // 4. 地図グラフ【メルボルン特化版】
+   // 4. 地図グラフ【メルボルン特化版】
 const mapSpec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
@@ -312,7 +312,6 @@ const mapSpec = {
     }
   ],
 
-  // メルボルンCBD周辺にズーム
   "projection": {
     "type": "mercator",
     "center": [144.9631, -37.8136],
@@ -381,26 +380,24 @@ const mapSpec = {
         "title": "Seats"
       }
     ]
-  }
-}
-  ,
-"config": {
-  "view": {
-    "stroke": "#cccccc"
   },
-  "axis": {
-    "grid": true,
-    "gridColor": "#d9d9d9",
-    "gridOpacity": 0.6,
-    "tickColor": "#999999",
-    "domainColor": "#999999"
-  }
-},
+
+  "config": {
     "view": {
-  "stroke": "#cccccc",
-  "fill": "#f8f5ed"
+      "stroke": "#cccccc",
+      "fill": "#f8f5ed"
+    },
+
+    "axis": {
+      "grid": true,
+      "gridColor": "#d9d9d9",
+      "gridOpacity": 0.6,
+      "tickColor": "#999999",
+      "domainColor": "#999999"
+    }
+  }
 };
-    
+
 vegaEmbed("#vis4", mapSpec).catch(console.error);
   </script>
 </body>
