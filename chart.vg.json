@@ -1,6 +1,6 @@
 {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "width": chartWidth, "height": 300,
+      "width": 620, "height": 300,
       "data": { "url": "Coffe_sales.csv", "format": {"type": "csv"} },
       "title": {"text": "Orders by Weekday", "subtitle": "Weekday demand remains stronger than weekend demand"},
       "transform": [{ "aggregate": [{"op": "count", "as": "orders"}], "groupby": ["Weekday", "Weekdaysort", "coffee_name"] }],
