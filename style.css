@@ -1,0 +1,118 @@
+
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-color: #f7f5f0;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .content {
+      max-width: 1250px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 40px;
+      border-bottom: 3px solid #4a3525;
+      padding-bottom: 20px;
+    }
+
+    h1 {
+      color: #4a3525;
+      font-size: 38px;
+      line-height: 1.2;
+      margin: 0 0 8px 0;
+      font-weight: 700;
+    }
+
+    .main-subtitle {
+      color: #6d5440;
+      font-size: 18px;
+      margin: 0;
+      font-style: italic;
+    }
+
+
+
+    .text-side {
+      flex: 1;
+      min-width: 320px;
+    }
+
+
+    h2 {
+      color: #5c4033;
+      font-size: 22px;
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    p {
+      font-size: 15px;
+      color: #444;
+      margin-bottom: 0;
+      text-align: justify;
+    }
+
+    .vega-bind {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #555;
+    }
+    .vega-bind select {
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    .intro-card {
+      background: #fff8ee;
+      border-left: 5px solid #8b5a2b;
+      padding: 22px 26px;
+      border-radius: 10px;
+      margin: 28px 0 36px 0;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+    }
+
+    .intro-card p {
+      font-size: 16px;
+      margin: 0;
+      text-align: left;
+    }
+
+    .part-label {
+      color: #8b5a2b;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 44px 0 4px 0;
+    }
+
+    .part-title {
+      color: #4a3525;
+      font-size: 28px;
+      margin: 0 0 18px 0;
+      border-bottom: 3px solid #8b5a2b;
+      padding-bottom: 10px;
+    }
+
+    .key-stat {
+      background: #f4eadc;
+      border-left: 4px solid #6f4e37;
+      padding: 12px 14px;
+      margin-top: 18px;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #3d2b20;
+    }
+
+    .chart-note {
+      font-size: 12px;
+      color: #777;
+      margin-top: 8px;
+      text-align: center;
+    }
