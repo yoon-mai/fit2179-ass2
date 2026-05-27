@@ -1,0 +1,14 @@
+{
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": chartWidth, "height": 300,
+      "data": { "url": "Coffe_sales.csv", "format": {"type": "csv"} },
+      "title": {"text": "Orders by Weekday", "subtitle": "Weekday demand remains stronger than weekend demand"},
+      "transform": [{ "aggregate": [{"op": "count", "as": "orders"}], "groupby": ["Weekday", "Weekdaysort", "coffee_name"] }],
+      "mark": {"type": "bar"},
+      "encoding": {
+        "x": { "field": "Weekday", "type": "ordinal", "sort": {"field": "Weekdaysort", "order": "ascending"}, "axis": {"labelAngle": 0} },
+        "y": { "field": "orders", "type": "quantitative", "axis": {"title": "Number of Orders"} },
+        "color": { "field": "coffee_name", "type": "nominal", "title": "Coffee Name", "scale": {"scheme": "category10"} },
+        "tooltip": [{"field": "Weekday", "title": "Weekday"}, {"field": "coffee_name", "title": "Coffee"}, {"field": "orders", "type": "quantitative"}]
+      }
+    }
