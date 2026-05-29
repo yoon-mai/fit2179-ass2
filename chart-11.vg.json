@@ -1,0 +1,63 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "background": "#f7f5f0",
+    "width":490,
+    "height": 250,
+    "data": {
+      "url": "Coffe_sales.csv",
+      "format": {"type": "csv"}
+    },
+    "title": {
+    "text": "Weekday order by time of day",
+    "anchor": "start",
+    "font": "Georgia",
+    "fontSize": 15,
+    "fontWeight": "bold",
+    "color": "#4A3525",
+    "offset": 12
+  },
+    "transform": [
+      {
+        "aggregate": [{"op": "count", "as": "orders"}],
+        "groupby": ["Weekday", "Time_of_Day"]
+      }
+    ],
+    "mark": {
+      "type": "rect",
+      "stroke": "#f7f5f0",
+      "strokeWidth": 2
+    },
+    "encoding": {
+      "x": {
+        "field": "Weekday",
+        "type": "nominal",
+        "sort": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        "axis": {"title": null, "labelAngle": 0}
+      },
+      "y": {
+        "field": "Time_of_Day",
+        "type": "nominal",
+        "sort": ["Morning", "Afternoon", "Night"],
+        "axis": {"title": null, "labelAngle": -90}
+      },
+      "color": {
+        "field": "orders",
+        "type": "quantitative",
+        "scale": {"scheme": "browns"},
+        "legend": {
+          "title": "Orders",
+          "orient": "bottom",
+          "direction": "horizontal",
+          "gradientLength": 300
+        }
+      },
+      "tooltip": [
+        {"field": "Weekday", "title": "Weekday"},
+        {"field": "Time_of_Day", "title": "Time"},
+        {"field": "orders", "title": "Orders"}
+      ]
+    },
+    "config": {
+      "view": {"stroke": "transparent"}
+    }
+  }

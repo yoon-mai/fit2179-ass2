@@ -1,0 +1,88 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "background": "#f7f5f0",
+    "width": 650,
+    "height": 500,
+    "title": {
+      "text": "The Expansion of Melbourne Cafe Seating",
+      "anchor": "start",
+      "font": "Georgia",
+      "fontSize": 15,
+      "fontWeight": "bold",
+      "color": "#4A3525",
+      "offset": 12
+    },
+    "projection": {
+      "type": "mercator",
+      "center": [144.94, -37.8136],
+      "scale": 300000
+    },
+    "params": [
+      {
+        "name": "selected_year",
+        "value": 2024,
+        "bind": {
+          "input": "range",
+          "min": 2002,
+          "max": 2024,
+          "step": 1,
+          "name": "Census year: "
+        }
+      }
+    ],
+    "layer": [
+      {
+        "data": {
+          "url": "property-boundaries.json",
+          "format": {
+            "type": "topojson",
+            "feature": "property-boundaries"
+          }
+        },
+        "mark": {
+          "type": "geoshape",
+          "fill": "#fffaf3",
+          "stroke": "#b89f87",
+          "strokeWidth": 0.35
+        }
+      },
+      {
+        "data": {
+          "url": "melbourne_cafes_spatial_sample_8000.csv",
+          "format": {"type": "csv"}
+        },
+        "transform": [
+          {"filter": "datum['Census year'] == selected_year"},
+          {"filter": "datum.Latitude != null && datum.Longitude != null"}
+        ],
+        "mark": {
+          "type": "circle",
+          "opacity": 0.8,
+          "color": "#8B5A2B",
+          "stroke": "#4A3525",
+          "strokeWidth": 0.4
+        },
+        "encoding": {
+          "longitude": {"field": "Longitude", "type": "quantitative"},
+          "latitude": {"field": "Latitude", "type": "quantitative"},
+          "size": {
+            "field": "Number of seats",
+            "type": "quantitative",
+            "scale": {
+              "domain": [0, 2000],
+              "range": [20, 260]
+            },
+            "legend": {
+              "title": "Seats",
+              "values": [100, 200, 300, 1000, 2000]
+            }
+          },
+          "tooltip": [
+            {"field": "Census year", "title": "Year"},
+            {"field": "CLUE small area", "title": "Area"},
+            {"field": "Number of seats", "title": "Seats"}
+          ]
+        }
+      }
+    ]
+  }

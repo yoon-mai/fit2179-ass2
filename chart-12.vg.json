@@ -1,0 +1,84 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "background": "#f7f5f0",
+    "data": {
+      "url": "melbourne_cafes_spatial_sample_8000.csv",
+      "format": {"type": "csv"}
+    },
+
+    "title": {
+      "text": "Indoor and Outdoor Seating Share by Area",
+      "anchor": "start",
+      "font": "Georgia",
+      "fontSize": 15,
+      "fontWeight": "bold",
+      "color": "#4A3525",
+      "offset": 12
+    },
+    "transform": [
+      {
+        "aggregate": [
+          {"op": "sum", "field": "Number of seats", "as": "total_seats"}
+        ],
+        "groupby": ["CLUE small area", "Seating type"]
+      },
+      {
+        "window": [{"op": "sum", "field": "total_seats", "as": "area_total"}],
+        "groupby": ["CLUE small area"]
+      },
+      {
+        "window": [{"op": "rank", "as": "area_rank"}],
+        "sort": [{"field": "area_total", "order": "descending"}]
+      },
+      {
+        "filter": "indexof(['Melbourne (CBD)', 'Southbank', 'North Melbourne', 'East Melbourne', 'Kensington', 'Parkville'], datum['CLUE small area']) >= 0"
+      }
+    ],
+    "facet": {
+      "field": "CLUE small area",
+      "type": "nominal",
+      "columns": 4,
+      "sort": {"field": "area_total", "order": "descending"},
+      "title": null
+    },
+    "spec": {
+      "width": 150,
+      "height": 95,
+      "mark": {
+        "type": "arc",
+        "innerRadius": 20,
+        "outerRadius": 45,
+        "stroke": "#fffaf3",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "theta": {
+          "field": "total_seats",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "Seating type",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Seats - Indoor", "Seats - Outdoor"],
+            "range": ["#4A3525", "#D9A066"]
+          },
+          "legend": {
+            "title": "Seating type",
+            "orient": "bottom"
+          }
+        },
+        "tooltip": [
+          {"field": "CLUE small area", "title": "Area"},
+          {"field": "Seating type", "title": "Type"},
+          {"field": "total_seats", "title": "Total seats", "type": "quantitative"},
+          {"field": "area_total", "title": "Area total", "type": "quantitative"}
+        ]
+      }
+    },
+    "resolve": {
+      "scale": {
+        "color": "shared"
+      }
+    }
+  }

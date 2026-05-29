@@ -1,0 +1,67 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 520,
+  "height": 300,
+  "data": {
+    "url": "Coffe_sales.csv",
+    "format": {"type": "csv"}
+  },
+  "title": {
+    "text": "Transaction Value Hotspots by Hour",
+    "subtitle": "Dense cells reveal when specific spending ranges are most common"
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(datum.hour_of_day)",
+      "as": "hour_num"
+    },
+    {
+      "filter": "datum.hour_num >= 6 && datum.hour_num <= 22"
+    }
+  ],
+  "mark": {
+    "type": "rect",
+    "stroke": "#f7f5f0",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "x": {
+      "field": "hour_num",
+      "type": "ordinal",
+      "sort": "ascending",
+      "axis": {
+        "title": "Hour of Day",
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "money",
+      "type": "quantitative",
+      "bin": {"maxbins": 15},
+      "axis": {
+        "title": "Transaction Amount ($)"
+      }
+    },
+    "color": {
+      "aggregate": "count",
+      "type": "quantitative",
+      "scale": {
+        "scheme": "purples"
+      },
+      "legend": {
+        "title": "Orders",
+        "orient": "bottom",
+        "direction": "horizontal",
+        "gradientLength": 220
+      }
+    },
+    "tooltip": [
+      {"field": "hour_num", "title": "Hour"},
+      {"field": "money", "bin": true, "title": "Transaction range"},
+      {"aggregate": "count", "title": "Total Orders"}
+    ]
+  },
+  "config": {
+    "view": {"stroke": "transparent"}
+  }
+}

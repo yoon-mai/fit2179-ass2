@@ -1,0 +1,150 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "background": "#f7f5f0",
+    "width": 600,
+    "height": 170,
+    "data": {
+      "url": "Coffe_sales.csv",
+      "format": {"type": "csv"}
+    },
+    "title": {
+    "text": "Hourly Distribution of Orders",
+    "anchor": "start",
+    "font": "Georgia",
+    "fontSize": 15,
+    "fontWeight": "bold",
+    "color": "#4A3525",
+    "offset": 12
+  },
+    "transform": [
+      {
+        "calculate": "toNumber(datum.hour_of_day)",
+        "as": "hour_num"
+      },
+      {
+        "filter": "datum.hour_num >= 6 && datum.hour_num <= 22"
+      },
+      {
+        "aggregate": [{"op": "count", "as": "orders"}],
+        "groupby": ["hour_num"]
+      }
+    ],
+    "layer": [
+      {
+        "mark": {
+          "type": "area",
+          "color": "#8B5A2B",
+          "opacity": 0.72,
+          "line": {
+            "color": "#4A3525",
+            "strokeWidth": 2
+          }
+        },
+        "encoding": {
+          "x": {
+            "field": "hour_num",
+            "type": "ordinal",
+            "sort": "ascending",
+            "axis": {
+              "title": "Hour of Day",
+              "labelAngle": 0
+            }
+          },
+          "y": {
+            "field": "orders",
+            "type": "quantitative",
+            "axis": {"title": "Orders"}
+          },
+          "tooltip": [
+            {"field": "hour_num", "title": "Hour"},
+            {"field": "orders", "title": "Orders"}
+          ]
+        }
+      },
+      {
+        "transform": [
+          {
+            "window": [{"op": "rank", "as": "rank"}],
+            "sort": [{"field": "orders", "order": "descending"}]
+          },
+          {"filter": "datum.rank == 1"}
+        ],
+        "mark": {
+          "type": "rule",
+          "strokeDash": [4, 4],
+          "color": "#4A3525",
+          "strokeWidth": 1.5
+        },
+        "encoding": {
+          "x": {
+            "field": "hour_num",
+            "type": "ordinal",
+            "sort": "ascending"
+          }
+        }
+      },
+      {
+        "transform": [
+          {
+            "window": [{"op": "rank", "as": "rank"}],
+            "sort": [{"field": "orders", "order": "descending"}]
+          },
+          {"filter": "datum.rank == 1"}
+        ],
+        "mark": {
+          "type": "point",
+          "filled": true,
+          "size": 90,
+          "color": "#ff0101"
+        },
+        "encoding": {
+          "x": {
+            "field": "hour_num",
+            "type": "ordinal",
+            "sort": "ascending"
+          },
+          "y": {
+            "field": "orders",
+            "type": "quantitative"
+          }
+        }
+      },
+      {
+        "transform": [
+          {
+            "window": [{"op": "rank", "as": "rank"}],
+            "sort": [{"field": "orders", "order": "descending"}]
+          },
+          {"filter": "datum.rank == 1"},
+          {
+            "calculate": "'Peak ' + datum.hour_num + ':00'",
+            "as": "label"
+          }
+        ],
+        "mark": {
+          "type": "text",
+          "align": "left",
+          "baseline": "bottom",
+          "dx": 8,
+          "dy": -8,
+          "fontSize": 13,
+          "fontWeight": "bold",
+          "color": "#4A3525"
+        },
+        "encoding": {
+          "x": {
+            "field": "hour_num",
+            "type": "ordinal",
+            "sort": "ascending"
+          },
+          "y": {
+            "field": "orders",
+            "type": "quantitative"
+          },
+          "text": {
+            "field": "label"
+          }
+        }
+      }
+    ]
+  }

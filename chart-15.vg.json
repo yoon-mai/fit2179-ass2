@@ -1,0 +1,147 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "#f7f5f0",
+  "width": 900,
+  "height": 430,
+  "title": {
+    "text": "Australia in the Global Coffee Market",
+    "anchor": "start",
+    "font": "Georgia",
+    "fontSize": 15,
+    "fontWeight": "bold",
+    "color": "#4A3525",
+    "offset": 12
+  },
+  "projection": {
+    "type": "naturalEarth1"
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "ne_110m.json",
+        "format": {
+          "type": "topojson",
+          "feature": "ne_110m_admin_0_countries"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#fffaf3",
+        "stroke": "#b89f87",
+        "strokeWidth": 0.4
+      }
+    },
+    {
+      "data": {
+        "url": "coffee_shop_sales.csv",
+        "format": {"type": "csv"}
+      },
+      "transform": [
+        {
+          "aggregate": [
+            {"op": "sum", "field": "total_amount", "as": "total_sales"},
+            {"op": "mean", "field": "total_amount", "as": "avg_transaction"},
+            {"op": "count", "as": "transactions"}
+          ],
+          "groupby": ["country"]
+        },
+        {
+          "window": [{"op": "rank", "as": "sales_rank"}],
+          "sort": [{"field": "total_sales", "order": "descending"}]
+        },
+        {
+          "calculate": "datum.country == 'AUS' ? 133.7751 : datum.country == 'UK' ? -3.4360 : datum.country == 'CAN' ? -106.3468 : datum.country == 'USA' ? -95.7129 : 0",
+          "as": "longitude"
+        },
+        {
+          "calculate": "datum.country == 'AUS' ? -25.2744 : datum.country == 'UK' ? 55.3781 : datum.country == 'CAN' ? 56.1304 : datum.country == 'USA' ? 37.0902 : 0",
+          "as": "latitude"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "opacity": 0.78,
+        "stroke": "#4A3525",
+        "strokeWidth": 0.8
+      },
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "size": {
+          "field": "total_sales",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 45000],
+            "range": [250, 3000]
+          },
+          "legend": {
+            "title": "Total sales",
+            "orient": "right"
+          }
+        },
+        "color": {
+          "field": "avg_transaction",
+          "type": "quantitative",
+          "scale": {
+            "scheme": "oranges"
+          },
+          "legend": {
+            "title": "Avg transaction",
+            "orient": "bottom",
+            "direction": "horizontal",
+            "gradientLength": 220
+          }
+        },
+        "tooltip": [
+          {"field": "country", "title": "Country"},
+          {"field": "sales_rank", "title": "Sales rank"},
+          {"field": "total_sales", "title": "Total sales", "format": ".2f"},
+          {"field": "avg_transaction", "title": "Average transaction", "format": ".2f"},
+          {"field": "transactions", "title": "Transactions"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "coffee_shop_sales.csv",
+        "format": {"type": "csv"}
+      },
+      "transform": [
+        {
+          "aggregate": [
+            {"op": "sum", "field": "total_amount", "as": "total_sales"}
+          ],
+          "groupby": ["country"]
+        },
+        {"filter": "datum.country == 'AUS'"},
+        {
+          "calculate": "133.7751",
+          "as": "longitude"
+        },
+        {
+          "calculate": "-25.2744",
+          "as": "latitude"
+        },
+        {
+          "calculate": "'Australia ranks among the leading coffee markets'",
+          "as": "label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "bottom",
+        "dx": -120,
+        "dy": 45,
+        "fontSize": 13,
+        "fontWeight": "bold",
+        "color": "#4A3525"
+      },
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "text": {"field": "label"}
+      }
+    }
+  ]
+}

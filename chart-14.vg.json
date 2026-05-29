@@ -1,0 +1,78 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "background": "#f7f5f0",
+    "width": 900,
+    "height": 360,
+    "data": {
+      "url": "melbourne_cafes_spatial_sample_8000.csv",
+      "format": {"type": "csv"}
+    },
+    "transform": [
+      {
+        "filter": "indexof(['Melbourne (CBD)', 'Docklands', 'Southbank', 'North Melbourne', 'Kensington', 'Parkville', 'East Melbourne'], datum['CLUE small area']) >= 0"
+      },
+      {
+        "aggregate": [
+          {"op": "count", "as": "cafe_count"}
+        ],
+        "groupby": ["Census year", "CLUE small area"]
+      }
+    ],
+    "mark": {
+      "type": "area",
+      "interpolate": "monotone",
+      "opacity": 0.85
+    },
+    "encoding": {
+      "x": {
+        "field": "Census year",
+        "type": "ordinal",
+        "sort": "ascending",
+        "axis": {
+          "title": "Census Year",
+          "labelAngle": 0
+        }
+      },
+      "y": {
+        "field": "cafe_count",
+        "type": "quantitative",
+        "stack": "zero",
+        "axis": {
+          "title": "Cafe count"
+        }
+      },
+      "color": {
+        "field": "CLUE small area",
+        "type": "nominal",
+        "scale": {
+      "domain": [
+        "Melbourne (CBD)",
+        "Docklands",
+        "Southbank",
+        "North Melbourne",
+        "Kensington",
+        "Parkville",
+        "East Melbourne"
+      ],
+      "range": [
+        "#4A3525",
+        "#8B5A2B",
+        "#D9A066",
+        "#C8B6A6",
+        "#A67C52",
+        "#E6C79C",
+        "#6F4E37"
+      ]
+    },
+        "legend": {
+          "title": "Area",
+          "orient": "right"
+        }
+      },
+      "tooltip": [
+        {"field": "Census year", "title": "Year"},
+        {"field": "CLUE small area", "title": "Area"},
+        {"field": "cafe_count", "title": "Cafe count"}
+      ]
+    }
+  }

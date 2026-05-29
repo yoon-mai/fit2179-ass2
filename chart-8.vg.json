@@ -1,0 +1,87 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "#f7f5f0",
+  "width": 170,
+  "height": 350,
+  "data": {
+    "url": "melbourne_cafes_spatial_sample_8000.csv",
+    "format": {"type": "csv"}
+  },
+  "title": {
+      "text": "Top Areas by Average Seating Capacity",
+      "anchor": "start",
+      "font": "Georgia",
+      "fontSize": 15,
+      "fontWeight": "bold",
+      "color": "#4A3525",
+      "offset": 12
+    },
+  "transform": [
+    {
+      "filter": "datum['CLUE small area'] != 'Melbourne (Remainder)' && datum['CLUE small area'] != null"
+    },
+    {
+      "aggregate": [
+        {"op": "mean", "field": "Number of seats", "as": "avg_seats"}
+      ],
+      "groupby": ["CLUE small area"]
+    },
+    {
+      "window": [{"op": "rank", "as": "rank"}],
+      "sort": [{"field": "avg_seats", "order": "descending"}]
+    },
+    {
+      "filter": "datum.rank <= 7"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {"type": "bar"},
+      "encoding": {
+        "y": {
+          "field": "CLUE small area",
+          "type": "nominal",
+          "sort": "-x",
+          "axis": {"title": null}
+        },
+        "x": {
+          "field": "avg_seats",
+          "type": "quantitative",
+          "axis": {"title": "Average Seating Capacity"}
+        },
+        "color": {
+          "condition": {
+            "test": "datum.rank == 1",
+            "value": "#8B0000"
+          },
+          "value": "#b89f87"
+        },
+        "tooltip": [
+          {"field": "CLUE small area", "title": "Area"},
+          {"field": "avg_seats", "title": "Average Seats", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "transform": [
+        {"filter": "datum.rank == 1"},
+        {"calculate": "'Highest avg: ' + format(datum.avg_seats, '.1f')", "as": "label"}
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": -100,
+        "dy": 35,
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#4A3525"
+      },
+      "encoding": {
+        "y": {"field": "CLUE small area", "type": "nominal", "sort": "-x"},
+        "x": {"field": "avg_seats", "type": "quantitative"},
+        "text": {"field": "label"}
+      }
+    }
+  ]
+}

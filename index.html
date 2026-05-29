@@ -2,61 +2,96 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>The Heartbeat of Melbourne’s Coffee Culture</title>
+  <title>The Heartbeat of Melbourne's Coffee Culture</title>
 
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <div class="content">
-    
-    <header>
-      <h1>The Heartbeat of Melbourne’s Coffee Culture ☕</h1>
-      <div class="main-subtitle">How time, drink choice, and place shape Melbourne's cafe habits</div>
+    <header class="hero-header">
+        <h1>The Heartbeat of Melbourne's Coffee Culture ☕</h1>
+        <div class="main-subtitle">
+            Exploring Melbourne's cafe culture through customer behaviour, menu trends, and business patterns
+        </div>
     </header>
+    <div class="content">
 
     <div class="intro-card">
-      <p>
-        Melbourne's coffee culture is not just about what people drink. It follows a clear rhythm across the week, peaks sharply in the morning, and is shaped by where cafes are located and how much seating they provide. This visualisation follows that story from daily demand to neighbourhood-level cafe spaces.
-      </p>
+        <div class="middle-text">
+        Melbourne is famous for its rich and vibrant coffee culture, where cafes are more than just places to grab a drink — they are part of everyday life.  
+        This visualisation explores the unique patterns behind Melbourne's cafe scene, from customer behaviour and popular drinks to cafe locations and business trends. By focusing on Melbourne first, we can better understand how coffee culture influences both social habits and the local cafe industry.
+        </div>
     </div>
+    <div class="line"></div>
 
-    <div class="part-label">Part 1</div>
-    <h2 class="part-title">When Does Melbourne Drink Coffee?</h2>
+    <h2 class="part-title big-part-title">Melbourne in the Global Coffee Scene</h2>
+
+    <div class="story-card">
+        <div class="chart-below">
+            <div id="vis15"></div>
+            <p>
+                Around the world, coffee is part of daily life — but in Australia, cafe culture has grown into something much larger.  
+                High sales volumes and strong customer spending place Australia among the world’s leading coffee markets.  
+                Within this landscape, Melbourne stands out for its dense cafe culture and unique customer habits, making it the perfect city to explore how coffee shapes both social behaviour and local business.
+            </p>
+            <p>  
+                From this global view, we now zoom into Melbourne itself.
+            </p>
+        </div>
+      </div>
+
+      <div class="line"></div>
+      
+<h2 class="part-title big-part-title">Daily Rhythms of Melbourne Coffee Orders</h2>
+<div class="section-intro">
+    Melbourne's coffee culture follows a clear daily and weekly rhythm. These charts explore when demand is strongest and how customer ordering patterns shape everyday cafe activity.
+</div>
+<div class="two-column-section">
+
+  <div class="story-card">
+    <div class="chart-below">
+    <div id="vis1"></div>
+    </div>
+    <p>
+        Weekday demand consistently exceeds weekend activity, with Friday recording the highest order volume (285 orders). This pattern highlights the importance of workday routines in Melbourne's coffee culture.
+    </p>
+  </div>
+
+  <div class="story-card">
+    <div class="chart-below">
+      <div id="vis11"></div>
+    <p>
+        The strongest demand occurs during weekday mornings, especially on Tuesday and Friday. Weekend orders are lower and less concentrated across specific time periods.
+    </p>
+    </div>
+  </div>
+</div>
 
     <div class="analysis-section">
-      <div class="text-side">
-        <h2>Section 1: Weekly Coffee Rhythms</h2>
-        <p>
-          Melbourne's coffee consumption follows a highly distinct weekly rhythm driven by the city's unique work-and-leisure culture. Looking at the weekly distribution, daily order volumes tend to remain consistently high from Monday through Friday, peaking on late weekdays as office workers fuel their routines. Interestingly, despite Melbourne's famous weekend brunch scene, cafe transactions see a slight drop on Saturdays and Sundays, suggesting that corporate commuter crowds heavily dictate the baseline volume of the city's espresso bars.
-        </p>
-      </div>
-      <div class="chart-side">
-        <div id="vis1"></div>
-      </div>
+        <div class="chart-side">
+            <div id="vis6"></div>
+        </div>
+        <div class="text-side">
+            <p>
+                Orders increase rapidly during the morning and reach their highest point at 10:00 AM. Demand remains relatively strong throughout the afternoon, highlighting the role of coffee as a regular part of Melbourne's daily routine.
+            </p>
+            </div>
     </div>
 
-    <div class="analysis-section">
-      <div class="text-side">
-        <h2>Section 2: The Daily Caffeine Peak</h2>
-        <p>
-          Timing is everything when it comes to caffeine. The data captures a massive surge in coffee purchases during the <strong>Morning</strong> hours, making up the vast majority of daily sales. This perfectly aligns with the rush-hour window where locals grab their morning brew on the way to university or work. As the day transitions into the <strong>Afternoon</strong>, orders taper off significantly, shifting toward sweeter, comforting choices like Hot Chocolate or Cocoa, before dropping to minimal numbers by evening.
-        </p>
-      </div>
-      <div class="chart-side">
-        <div id="vis2"></div>
-      </div>
-    </div>
 
     <div class="analysis-section">
+
       <div class="text-side">
-        <h2>Section 3: Daily Transaction Trends</h2>
+        <h3>Daily Transaction Trends</h3>
         <p>
-          Tracking coffee orders on a day-to-day timeline reveals the fluid nature of local demand. Daily transaction totals showcase sharp cyclical spikes and dips, corresponding to the weekly transitions between workdays and weekends. These patterns demonstrate just how deeply integrated cafe visits are within the everyday lifestyle of Melburnians, acting as a reliable barometer for the city's daily movement and public activity.
+            While demand fluctuates throughout the year, several periods show noticeably higher activity. Use the dropdown menu to explore how these patterns vary across different coffee types.
         </p>
       </div>
       <div class="chart-side">
@@ -64,101 +99,175 @@
       </div>
     </div>
 
-    <div class="part-label">Part 2</div>
-    <h2 class="part-title">What Are People Buying?</h2>
+    <div class="line"></div>
+    
+<h2 class="part-title">Neighbourhoods and Cafe Life in Melbourne</h2>
+<div class="section-intro">
+    Melbourne's cafe culture extends far beyond the CBD. These charts examine how cafe activity, seating capacity, and neighbourhood characteristics vary across the city.
+</div>
+<div class="map-section">
+            <div class="map-chart">
+            </div>
+            <div class="map-text">
+                <h3>How Melbourne's Cafe Network Has Evolved</h3>
+                
+            </div>
+            <div id="vis14"></div>
+            <p>
+                Cafe activity has expanded across Melbourne since 2002, with the CBD remaining the city's primary cafe hub. At the same time, surrounding neighbourhoods have gradually increased their presence, reflecting the broader growth of Melbourne's cafe culture.
+            </p>
+        </div>
 
-    <div class="analysis-section">
-      <div class="text-side">
-        <h2>Section 4: Popularity of Beverage Types</h2>
-        <p>
-          When analyzing the market share of specific drinks, certain classics dominate Melbourne's espresso bars. This chart highlights the absolute popularity breakdown across all transactions. Regular milk-based coffees and traditional black coffee selections capture the lion's share, while specialty items and alternative comfort drinks like Cocoa represent strategic niche preferences that help cafes diversify their menu appeal.
-        </p>
-      </div>
-      <div class="chart-side">
-        <div id="vis_added_1"></div>
-      </div>
+        <div class="margin"></div>
+
+    <div class="two-column-section">
+
+        <div class="map-section">
+            <div class="map-chart">
+                <h3>The Growth of Melbourne's Cafe Landscape</h3>
+                <div class="map-text">
+                    <p>
+                        Cafe seating has expanded significantly across Melbourne since 2002, reflecting the growing role of cafes in the city's social and economic life. Use the slider to explore how seating capacity spread across different neighbourhoods over time.
+                    </p>
+                </div>
+                <div id="vis7"></div>
+            </div>
+
+
+        <div class="margin"></div>
     </div>
+      
+        <div class="map-section">
+            <div class="map-chart">
+            </div>
+            <p>                                                                                                                                                    
+                .                                                                                                                                                                                                                                    </p>
+            <div class="map-text">
+                <div id="vis8"></div>
+                <p>
+                    Average seating capacity varies considerably across Melbourne. Kensington records the highest average seating capacity, suggesting that larger-format cafes are more common in some neighbourhoods than others.
+                </p>
+            </div>
+          
+        </div>
+      </div>
 
-    <div class="analysis-section">
-      <div class="text-side">
-        <h2>Section 5: Transaction Value Distribution</h2>
-        <p>
-          Understanding how much customers spend per transaction provides vital operational insights. The distribution of card transaction values reveals a heavily concentrated peak in the standard coffee price bracket. This steady, highly predictable ticket size underscores the high-frequency, low-investment nature of daily coffee purchases, illustrating how micro-transactions aggregate into massive economic value for local businesses.
-        </p>
-      </div>
-      <div class="chart-side">
-        <div id="vis_added_2"></div>
-      </div>
+      <div class="line"></div>
+    <div class="map-section">
+        <div class="map-chart">
+        </div>
+        <div class="map-text">
+            <h3>Indoor vs. Outdoor Seating Proportions</h3>
+            <p>
+                While indoor seating dominates across Melbourne, the share of outdoor seating varies between neighbourhoods. These differences may reflect local environments and the diverse ways people experience cafe culture across the city.
+            </p>
+            <div id="vis12"></div>
+        </div>
+        
     </div>
+    
 
     <div class="analysis-section">
-      <div class="text-side">
-        <h2>Section 6: Hourly Distribution of Sales</h2>
-        <p>
-          Zooming into an hourly breakdown reveals the precise operational windows that define a cafe's business day. Transaction volume explodes between 8:00 AM and 11:00 AM, matching the intense workflow of morning routines. By tracing the exact hour of operations, businesses can dynamically manage staffing levels, optimize inventory replenishment, and plan precise marketing campaigns to target afternoon lulls.
+        
+        <div class="text-side">
+          <p>
+            Cafe activity is concentrated around central Melbourne and surrounding inner suburbs. Switch between cafe count, total seating, and average seating to explore how different areas contribute to Melbourne's cafe landscape.
         </p>
+        </div>
+        <div class="chart-side">
+            <div id="vis9"></div>
+        </div>
       </div>
-      <div class="chart-side">
-        <div id="vis_added_3"></div>
-      </div>
+
+
+  <div class="line"></div>
+
+
+<h2 class="part-title">Turning Coffee Data into Cafe Strategy</h2>
+<div class="section-intro">
+it is important to understand how customers typically spend. The following charts explore the factors that influence transaction value and purchasing behaviour.
+</div>
+
+<div class="analysis-section">
+
+    <div class="text-side">
+      <h3>Understanding Customer Spending</h3>
+      <p>
+        Most transactions fall within the $34-$36 range, suggesting a clear customer spending benchmark. This provides a useful reference point when designing pricing strategies and promotional offers.
+    </p>
     </div>
-
-    <div class="part-label">Part 3</div>
-    <h2 class="part-title">Where Is Coffee Culture Concentrated?</h2>
-
-    <div class="analysis-section">
-      <div class="text-side">
-        <h2>Section 7: Geographic Distribution</h2>
-        <p>
-          Geographically, the dense clusters of dining spaces illustrate why Melbourne is heralded as a global coffee capital. The <strong>Melbourne CBD</strong> holds the highest density of cafes, acting as the epicenter of hospitality. Interestingly, the data shows a strong contrast in seating preference: while corporate hubs in the CBD favor massive indoor seating capacities to accommodate business meetings and rainy winter days, neighboring cultural precincts like Carlton and Docklands offer unique outdoor pockets, creating a diverse spatial landscape for coffee lovers.
-        </p>
-      </div>
-      <div class="chart-side">
+    <div class="chart-side">
         <div id="vis4"></div>
       </div>
-    </div>
-
-    <div class="analysis-section">
-      <div class="text-side">
-        <h2>Section 8: Average Seating Capacity by Suburb</h2>
-        <p>
-          Spatial dynamics vary deeply when looking at individual suburb layouts. By aggregating cafe seating metrics, we can identify which neighborhoods support large-scale hospitality hubs versus intimate boutique espresso spots. Areas featuring higher average seating metrics typically point to high-volume commercial districts, while smaller averages characterize residential or artistic lanes where compact storefronts define the community.
-        </p>
-      </div>
-      <div class="chart-side">
-        <div id="vis_added_4"></div>
-      </div>
-    </div>
-
-    <div class="analysis-section">
-      <div class="text-side">
-        <h2>Section 9: Indoor vs. Outdoor Seating Proportions</h2>
-        <p>
-          Melbourne's unpredictable weather dictates how commercial dining spaces structure their layout. This macro comparison highlights the total infrastructure balance between indoor and outdoor dining configurations. The substantial reliance on indoor spaces highlights the necessity of providing climate-controlled year-round comfort, while the dedicated outdoor sector highlights the urban alfresco culture that thrives during pleasant summer months.
-        </p>
-      </div>
-      <div class="chart-side">
-        <div id="vis_added_5"></div>
-      </div>
-    </div>
-
-    <div class="analysis-section">
-      <div class="text-side">
-        <h2>Section 10: Neighborhood Cafe Density</h2>
-        <p>
-          Market saturation and commercial competition become immediately evident when counting individual venues across small administrative sectors. This density matrix ranks districts based on sheer venue volume. The resulting breakdown serves as a clear indicator of commercial real estate demand, helping researchers and prospective entrepreneurs pinpoint hyper-competitive hotspots versus emerging spatial opportunities.
-        </p>
-      </div>
-      <div class="chart-side">
-        <div id="vis_added_6"></div>
-      </div>
-    </div>
-
   </div>
 
-  <script>
-    vegaEmbed("#vis1", "chart.vg.json", {"actions": false});
-  </script>
+
+  <div class="map-section">
+    <div class="map-chart">
+    </div>
+    <div class="map-text">
+        <div id="vis5"></div>
+        <p>
+            Products with higher prices do not always have lower demand. Larger drinks and food items can still achieve strong sales, highlighting opportunities for cafes to grow revenue through value-based menu design.
+        </p>
+    </div>
+</div>
+<div class="line"></div>
+
+<div class="map-section">
+    <h3>Product Demand by Temperature</h3>
+    <div class="map-chart">
+    </div>
+    <div class="map-text">
+
+        <div id="vis2"></div>
+        <p>
+            Demand is generally strongest during mild weather, with coffee orders peaking between 15°C and 20°C. Understanding these patterns can help cafes better anticipate demand and plan their product offerings.
+        </p>
+    </div>
+
+
+  <div class="analysis-section">
+    <div class="chart-side">
+        <div id="vis16"></div>
+    </div>
+    <div class="text-side">
+      <p>
+        Larger order sizes are most evident among older Australian customers, highlighting their importance to overall sales. While this customer segment appears highly engaged, cafes may be able to create additional growth opportunities by developing strategies that appeal more strongly to younger consumers.
+    </p>
+    </div>
+    
+  </div>
+
+<p>
+  Melbourne's cafe market is driven by predictable spending patterns, strong demand for higher-value products, and clear seasonal preferences. Businesses that align pricing, product offerings, and customer targeting strategies with these behaviours may be better positioned to increase sales.
+</p>
+
+
+</div>
+
+  <script src="vega_lite_vis.js"></script>
   
+
+
+
+<footer class="reference-footer">
+    <h2>References</h2>
+    <p>• Coffee Sales Dataset. Kaggle (Navjot Kaushal)</p>
+    <p>• Global Coffee Shop Sales Dataset. Kaggle (Moez Ali Khan)</p>
+    <p>• City of Melbourne Open Data</p>
+    <p>• Natural Earth Map Data</p>
+    
+      Coffee transaction data: Coffe_sales.csv.  
+      Melbourne cafe spatial and seating data: melbourne_cafes_spatial_sample_8000.csv.
+      Use of AI: Generative AI (Anthropic's Claude) was used to assist with planning the visualisation set, debugging and refining Vega-Lite specifications, aggregating large source datasets into chart-ready summaries, and checking the clarity and grammar of the narrative text. All data is real and drawn from the cited sources; all charts were assembled, reviewed and finalised by the author.
+    </p>
+    <p>
+      Visualisation created using Vega-Lite and Vega-Embed.
+    </p>
+  </footer>
 </body>
+
+
+
 </html>

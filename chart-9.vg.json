@@ -1,0 +1,110 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "background": "#f7f5f0",
+    "width": 500,
+    "height": 440,
+    "title": {
+      "text": "Interactive Cafe Grid Across Melbourne",
+      "anchor": "start",
+      "font": "Georgia",
+      "fontSize": 15,
+      "fontWeight": "bold",
+      "color": "#4A3525",
+      "offset": 12
+    },
+    "projection": {
+      "type": "mercator",
+      "center": [144.94, -37.8136],
+      "scale": 250000
+    },
+    "params": [
+      {
+        "name": "metric_select",
+        "value": "Cafe count",
+        "bind": {
+          "input": "select",
+          "options": ["Cafe count", "Total seats", "Average seats"],
+          "name": "Colour by: "
+        }
+      }
+    ],
+    "layer": [
+      {
+        "data": {
+          "url": "property-boundaries.json",
+          "format": {
+            "type": "topojson",
+            "feature": "property-boundaries"
+          }
+        },
+        "mark": {
+          "type": "geoshape",
+          "fill": "#fffaf3",
+          "stroke": "#b89f87",
+          "strokeWidth": 0.35
+        }
+      },
+      {
+        "data": {
+          "url": "melbourne_cafes_spatial_sample_8000.csv",
+          "format": {"type": "csv"}
+        },
+        "transform": [
+          {"filter": "datum.Latitude != null && datum.Longitude != null"},
+          {
+            "calculate": "floor(toNumber(datum.Longitude) * 400) / 400",
+            "as": "lon_grid"
+          },
+          {
+            "calculate": "floor(toNumber(datum.Latitude) * 400) / 400",
+            "as": "lat_grid"
+          },
+          {
+            "aggregate": [
+              {"op": "count", "as": "cafe_count"},
+              {"op": "sum", "field": "Number of seats", "as": "total_seats"},
+              {"op": "mean", "field": "Number of seats", "as": "average_seats"}
+            ],
+            "groupby": ["lon_grid", "lat_grid"]
+          },
+          {
+            "calculate": "metric_select == 'Cafe count' ? datum.cafe_count : metric_select == 'Total seats' ? datum.total_seats : datum.average_seats",
+            "as": "selected_metric_value"
+          },
+          {
+            "calculate": "metric_select == 'Cafe count' ? 'Cafe count' : metric_select == 'Total seats' ? 'Total seats' : 'Average seats'",
+            "as": "metric_label"
+          }
+        ],
+        "mark": {
+          "type": "square",
+          "size": 180,
+          "opacity": 0.85,
+          "stroke": "#fffaf3",
+          "strokeWidth": 0.4
+        },
+        "encoding": {
+          "longitude": {"field": "lon_grid", "type": "quantitative"},
+          "latitude": {"field": "lat_grid", "type": "quantitative"},
+          "color": {
+            "field": "selected_metric_value",
+            "type": "quantitative",
+            "scale": {"scheme": "browns"},
+            "legend": {"title": "Selected metric"}
+          },
+          "tooltip": [
+            {"field": "metric_label", "title": "Colour metric"},
+            {"field": "selected_metric_value", "title": "Metric value", "type": "quantitative", "format": ".1f"},
+            {"field": "cafe_count", "title": "Cafe count"},
+            {"field": "total_seats", "title": "Total seats"},
+            {"field": "average_seats", "title": "Average seats", "type": "quantitative", "format": ".1f"},
+            {"field": "lat_grid", "title": "Latitude"},
+            {"field": "lon_grid", "title": "Longitude"}
+          ]
+        }
+      }
+    ],
+    "config": {
+      "view": {"stroke": "transparent"}
+    }
+  }

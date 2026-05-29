@@ -1,0 +1,98 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "#f7f5f0",
+  "width":900 ,
+  "height": 300,
+  "data": {
+    "url": "coffee_shop_sales.csv",
+    "format": {"type": "csv"}
+  },
+  "title": {
+      "text": "Price vs Demand",
+      "subtitle": "Comparing product price with quantity sold in Melbourne",
+      "anchor": "start",
+      "font": "Georgia",
+      "fontSize": 15,
+      "fontWeight": "bold",
+      "color": "#4A3525",
+      "offset": 12
+    },
+  "transform": [
+    {"filter": "datum.city == 'Melbourne'"},
+    {"filter": "datum.product_category != 'Merchandise'"},
+    {
+      "aggregate": [
+        {"op": "mean", "field": "unit_price", "as": "avg_unit_price"},
+        {"op": "sum", "field": "quantity", "as": "quantity_sold"},
+        {"op": "sum", "field": "total_amount", "as": "total_revenue"}
+      ],
+      "groupby": ["product_name", "product_category"]
+    },
+    {
+      "window": [{"op": "rank", "as": "revenue_rank"}],
+      "sort": [{"field": "total_revenue", "order": "descending"}]
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "opacity": 0.75,
+        "stroke": "#4A3525",
+        "strokeWidth": 0.4
+      },
+      "encoding": {
+        "x": {
+          "field": "avg_unit_price",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 8]
+          },
+          "axis": {
+            "title": "Average Unit Price ($)",
+            "format": "$.2f"
+          }
+        },
+        "y": {
+          "field": "quantity_sold",
+          "type": "quantitative",
+          "axis": {"title": "Quantity Sold"}
+        },
+        "size": {
+          "field": "total_revenue",
+          "type": "quantitative",
+          "legend": {"title": "Revenue"}
+        },
+        "color": {
+          "field": "product_category",
+          "type": "nominal",
+          "legend": {"title": "Product Category"}
+        },
+        "tooltip": [
+          {"field": "product_name", "title": "Product"},
+          {"field": "product_category", "title": "Category"},
+          {"field": "avg_unit_price", "title": "Avg Unit Price", "type": "quantitative", "format": "$.2f"},
+          {"field": "quantity_sold", "title": "Quantity Sold"},
+          {"field": "total_revenue", "title": "Revenue", "type": "quantitative", "format": "$,.2f"}
+        ]
+      }
+    },
+    {
+      "transform": [
+        {"filter": "datum.revenue_rank <= 8"}
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": -20,
+        "dy": -10,
+        "fontSize": 10
+      },
+      "encoding": {
+        "x": {"field": "avg_unit_price", "type": "quantitative"},
+        "y": {"field": "quantity_sold", "type": "quantitative"},
+        "text": {"field": "product_name"}
+      }
+    }
+  ]
+}

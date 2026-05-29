@@ -1,14 +1,92 @@
 {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "width": 620, "height": 300,
-      "data": { "url": "Coffe_sales.csv", "format": {"type": "csv"} },
-      "title": {"text": "Orders by Weekday", "subtitle": "Weekday demand remains stronger than weekend demand"},
-      "transform": [{ "aggregate": [{"op": "count", "as": "orders"}], "groupby": ["Weekday", "Weekdaysort", "coffee_name"] }],
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "#f7f5f0",
+  "width": 400,
+  "height": 250,
+  "data": { "url": "Coffe_sales.csv", "format": {"type": "csv"} },
+  "title": {
+    "text": "Orders by Weekday",
+    "anchor": "start",
+    "font": "Georgia",
+    "fontSize": 15,
+    "fontWeight": "bold",
+    "color": "#4A3525",
+    "offset": 12
+  },
+  "transform": [
+    {
+      "filter": "datum.coffee_name != 'Cappuccino' && datum.coffee_name != 'Cortado' && datum.coffee_name != 'Americano with Milk' && datum.coffee_name != 'Hot Chocolate'"
+    },
+    {
+      "aggregate": [{"op": "count", "as": "orders"}],
+      "groupby": ["Weekday", "Weekdaysort", "coffee_name"]
+    }
+  ],
+  "layer": [
+    {
       "mark": {"type": "bar"},
       "encoding": {
-        "x": { "field": "Weekday", "type": "ordinal", "sort": {"field": "Weekdaysort", "order": "ascending"}, "axis": {"labelAngle": 0} },
-        "y": { "field": "orders", "type": "quantitative", "axis": {"title": "Number of Orders"} },
-        "color": { "field": "coffee_name", "type": "nominal", "title": "Coffee Name", "scale": {"scheme": "category10"} },
-        "tooltip": [{"field": "Weekday", "title": "Weekday"}, {"field": "coffee_name", "title": "Coffee"}, {"field": "orders", "type": "quantitative"}]
+        "x": {
+          "field": "Weekday",
+          "type": "ordinal",
+          "scale": {
+            "domain": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+          },
+          "axis": {"labelAngle": 0}
+        },
+        "y": {
+          "field": "orders",
+          "type": "quantitative",
+          "axis": {"title": "Number of Orders"}
+        },
+        "color": {
+          "field": "coffee_name",
+          "type": "nominal",
+          "legend": {
+            "title": "Coffee Name",
+            "orient": "right",
+            "direction": "vertical"
+          },
+          "scale": {
+            "domain": ["Americano", "Cocoa", "Espresso", "Latte"],
+            "range": ["#8B5A2B", "#D9A066", "#4A3525", "#C8B6A6"]
+          }
+        },
+        "tooltip": [
+          {"field": "Weekday", "title": "Weekday"},
+          {"field": "coffee_name", "title": "Coffee"},
+          {"field": "orders", "type": "quantitative"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"Weekday": "Fri", "total_orders": 285, "label": "Peak: 285 orders"}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "dy": -10,
+        "fontSize": 13,
+        "fontWeight": "bold",
+        "color": "#4A3525"
+      },
+      "encoding": {
+        "x": {
+          "field": "Weekday",
+          "type": "ordinal",
+          "scale": {
+            "domain": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+          }
+        },
+        "y": {
+          "field": "total_orders",
+          "type": "quantitative"
+        },
+        "text": {"field": "label"}
       }
     }
+  ]
+}

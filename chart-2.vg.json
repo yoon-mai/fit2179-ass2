@@ -1,0 +1,162 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "#f7f5f0",
+  "width": 900,
+  "height": 300,
+  "data": {
+    "url": "coffee_shop_sales.csv",
+    "format": {"type": "csv"}
+  },
+"title": {
+    "text": "Product Demand by Temperature",
+    "anchor": "start",
+    "font": "Georgia",
+    "fontSize": 15,
+    "fontWeight": "bold",
+    "color": "#4A3525",
+    "offset": 12
+  },
+  "params": [
+    {
+      "name": "country_select",
+      "value": null,
+      "bind": {
+        "input": "select",
+        "options": [null, "AUS", "USA", "UK", "CAN"],
+        "labels": ["All Countries", "Australia", "USA", "UK", "Canada"],
+        "name": "Country: "
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "country_select == null || datum.country == country_select"
+    },
+    {
+      "filter": "datum.temperature_c != null && datum.product_category != null"
+    },
+    {
+      "calculate": "toNumber(datum.temperature_c)",
+      "as": "temp_num"
+    },
+    {
+      "filter": "isValid(datum.temp_num)"
+    },
+    {
+      "bin": {"step": 5},
+      "field": "temp_num",
+      "as": ["temp_bin", "temp_bin_end"]
+    },
+    {
+      "aggregate": [
+        {"op": "count", "as": "orders"},
+        {"op": "mean", "field": "total_amount", "as": "avg_spend"}
+      ],
+      "groupby": ["temp_bin", "temp_bin_end", "product_category"]
+    },
+    {
+      "calculate": "'Coffee peak: ' + format(datum.temp_bin, '.0f') + '°C'",
+      "as": "label"
+    }
+  ],
+  "layer": [
+    {
+      "transform": [
+        {"filter": "datum.product_category == 'Coffee'"},
+        {
+          "window": [{"op": "rank", "as": "coffee_rank"}],
+          "sort": [{"field": "orders", "order": "descending"}]
+        },
+        {"filter": "datum.coffee_rank == 1"}
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 120,
+        "color": "#8B0000"
+      },
+      "encoding": {
+        "x": {"field": "temp_bin", "type": "ordinal", "sort": "ascending"},
+        "y": {"field": "orders", "type": "quantitative"}
+      }
+    },
+    {
+      "transform": [
+        {"filter": "datum.product_category == 'Coffee'"},
+        {
+          "window": [{"op": "rank", "as": "coffee_rank"}],
+          "sort": [{"field": "orders", "order": "descending"}]
+        },
+        {"filter": "datum.coffee_rank == 1"},
+        {
+          "calculate": "'Coffee peak: ' + format(datum.temp_bin, '.0f') + '°C'",
+          "as": "label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "bottom",
+        "dx": 10,
+        "dy": -8,
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#4A3525"
+      },
+      "encoding": {
+        "x": {"field": "temp_bin", "type": "ordinal", "sort": "ascending"},
+        "y": {"field": "orders", "type": "quantitative"},
+        "text": {"field": "label"}
+      }
+    },
+        {
+          "mark": {
+      "type": "line",
+      "point": true,
+      "interpolate": "monotone",
+      "strokeWidth": 3
+    },
+      "encoding": {
+        "x": {
+          "field": "temp_bin",
+          "type": "ordinal",
+          "sort": "ascending",
+          "scale": {
+            "domain": [-15, -10, -5, 0, 5, 10, 15, 20, 25, 30]
+          },
+          "axis": {
+            "title": "Temperature Range",
+            "labelAngle": -30,
+            "labelExpr": "datum.label + '°C'"
+          }
+        },
+        "y": {
+          "field": "orders",
+          "type": "quantitative",
+          "axis": {
+            "title": "Orders"
+          }
+        },
+        "color": {
+          "field": "product_category",
+          "type": "nominal",
+          "scale": {
+            "range": ["#4A3525", "#8B5A2B", "#D9A066", "#C8B6A6"]
+          },
+          "legend": {
+            "title": "Product Category"
+          }
+        },
+        "tooltip": [
+          {"field": "product_category", "title": "Product Category"},
+          {"field": "temp_range", "title": "Temperature"},
+          {"field": "orders", "title": "Orders"},
+          {"field": "avg_spend", "title": "Avg Spend", "format": ".2f"}
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": "transparent"}
+  }
+}

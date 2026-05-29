@@ -1,0 +1,114 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "background": "#f7f5f0",
+    "width": 700,
+    "height": 260,
+    "data": {
+      "url": "Coffe_sales.csv",
+      "format": {"type": "csv"}
+    },
+    "transform": [
+      {
+        "bin": {"maxbins": 12},
+        "field": "money",
+        "as": ["money_bin", "money_bin_end"]
+      },
+      {
+        "aggregate": [{"op": "count", "as": "transactions"}],
+        "groupby": ["money_bin", "money_bin_end"]
+      },
+      {
+        "calculate": "'$' + datum.money_bin + '-$' + datum.money_bin_end",
+        "as": "money_range"
+      },
+      {
+        "window": [{"op": "rank", "as": "rank"}],
+        "sort": [{"field": "transactions", "order": "descending"}]
+      }
+    ],
+    "layer": [
+      {
+        "mark": {
+          "type": "rule",
+          "strokeWidth": 2
+        },
+        "encoding": {
+          "y": {
+            "field": "money_range",
+            "type": "ordinal",
+            "sort": {"field": "money_bin", "order": "ascending"},
+            "axis": {"title": "Transaction amount"}
+          },
+          "x": {"datum": 0, "type": "quantitative"},
+          "x2": {"field": "transactions", "type": "quantitative"},
+          "color": {
+            "condition": {
+              "test": "datum.rank == 1",
+              "value": "#8b0000"
+            },
+            "value": "#b89f87"
+          }
+        }
+      },
+      {
+        "mark": {
+          "type": "circle",
+          "size": 95
+        },
+        "encoding": {
+          "y": {
+            "field": "money_range",
+            "type": "ordinal",
+            "sort": {"field": "money_bin", "order": "ascending"}
+          },
+          "x": {
+            "field": "transactions",
+            "type": "quantitative",
+            "axis": {"title": "Frequency"}
+          },
+          "color": {
+            "condition": {
+              "test": "datum.rank == 1",
+              "value": "#8b0000"
+            },
+            "value": "#b89f87"
+          },
+          "tooltip": [
+            {"field": "money_range", "title": "Amount range"},
+            {"field": "transactions", "title": "Transactions"}
+          ]
+        }
+      },
+      {
+        "transform": [
+          {"filter": "datum.rank == 1"},
+          {
+            "calculate": "'Most common range (' + datum.transactions + ' transactions)'",
+            "as": "label"
+          }
+        ],
+        "mark": {
+          "type": "text",
+          "align": "left",
+          "baseline": "middle",
+          "dx": -200,
+          "dy": 20,
+          "fontSize": 12,
+          "fontWeight": "bold",
+          "color": "#4A3525"
+        },
+        "encoding": {
+          "y": {
+            "field": "money_range",
+            "type": "ordinal",
+            "sort": {"field": "money_bin", "order": "ascending"}
+          },
+          "x": {
+            "field": "transactions",
+            "type": "quantitative"
+          },
+          "text": {"field": "label"}
+        }
+      }
+    ]
+  }

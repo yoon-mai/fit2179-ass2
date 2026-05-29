@@ -1,0 +1,76 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "#f7f5f0",
+  "width": 700,
+  "height": 320,
+  "data": {"url": "coffee_shop_sales.csv", "format": {"type": "csv"}},
+  "title": {
+    "text": "Group Purchase Tendency by Age and Market",
+    "anchor": "start",
+    "font": "Georgia",
+    "fontSize": 15,
+    "fontWeight": "bold",
+    "color": "#4A3525",
+    "offset": 12
+  },
+  "transform": [
+    {
+      "filter": "datum.customer_age_group != null && datum.quantity != null && datum.country != null"
+    },
+    {
+      "calculate": "datum.country == 'AUS' ? 'Australia' : 'Other Markets'",
+      "as": "market_group"
+    },
+    {
+      "calculate": "toNumber(datum.quantity)",
+      "as": "quantity_num"
+    },
+    {
+      "calculate": "datum.quantity_num >= 2 ? 1 : 0",
+      "as": "multi_item_order"
+    },
+    {
+      "aggregate": [
+        {"op": "mean", "field": "quantity_num", "as": "avg_quantity"},
+        {"op": "count", "as": "transactions"}
+      ],
+      "groupby": ["market_group", "customer_age_group"]
+    }
+  ],
+  "mark": {
+    "type": "circle",
+    "size": 500,
+    "opacity": 0.8,
+    "stroke": "#4A3525",
+    "strokeWidth": 0.7
+  },
+  "encoding": {
+    "x": {
+      "field": "customer_age_group",
+      "type": "ordinal",
+      "sort": ["18-24", "25-34", "35-44", "45-54", "55-64", "65+"],
+      "axis": {"title": "Age Group", "labelAngle": 0}
+    },
+    "y": {
+      "field": "avg_quantity",
+      "type": "quantitative",
+      "scale": {"domain": [1.60, 1.85]},
+      "axis": {"title": "Average Quantity"}
+    },
+    "color": {
+      "field": "market_group",
+      "type": "nominal",
+      "scale": {
+        "domain": ["Australia", "Other Markets"],
+        "range": ["#8B0000", "#B89F87"]
+      },
+      "legend": {"title": "Market"}
+    },
+    "tooltip": [
+      {"field": "market_group", "title": "Market"},
+      {"field": "customer_age_group", "title": "Age Group"},
+      {"field": "avg_quantity", "title": "Avg Quantity", "format": ".2f"},
+      {"field": "transactions", "title": "Transactions"}
+    ]
+  }
+}

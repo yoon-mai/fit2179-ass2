@@ -1,0 +1,97 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 560,
+  "height": 340,
+  "data": {"url": "coffee_shop_sales.csv", "format": {"type": "csv"}},
+  "title": {
+    "text": "Store Type Profitability Matrix",
+    "subtitle": "Use the country filter to compare store-type performance"
+  },
+  "params": [
+    {
+      "name": "country_select",
+      "bind": {
+        "input": "select",
+        "options": [null, "AUS", "USA", "UK", "CAN"],
+        "labels": ["All Countries", "Australia", "USA", "UK", "Canada"],
+        "name": "Country: "
+      }
+    }
+  ],
+  "transform": [
+    {"filter": "country_select == null || datum.country == country_select"},
+    {"filter": "datum.store_type != null && datum.total_amount != null"},
+    {"calculate": "toNumber(datum.total_amount)", "as": "amount"},
+    {
+      "aggregate": [
+        {"op": "mean", "field": "amount", "as": "avg_spend"},
+        {"op": "count", "as": "transactions"},
+        {"op": "sum", "field": "amount", "as": "revenue"}
+      ],
+      "groupby": ["store_type"]
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "opacity": 0.78,
+        "stroke": "#4A3525",
+        "strokeWidth": 0.8
+      },
+      "encoding": {
+        "x": {
+        "field": "avg_spend",
+        "type": "quantitative",
+        "scale": {
+            "domain": [5.8, 9.2]
+        },
+        "axis": {"title": "Average Spend"}
+        },
+        "y": {
+        "field": "transactions",
+        "type": "quantitative",
+        "scale": {
+            "domain": [0, 14000]
+        },
+        "axis": {"title": "Transaction Count"}
+        },
+        "size": {
+          "field": "revenue",
+          "type": "quantitative",
+          "scale": {"range": [300, 3500]},
+          "legend": {"title": "Revenue"}
+        },
+        "color": {
+          "field": "store_type",
+          "type": "nominal",
+          "scale": {
+            "range": ["#4A3525", "#8B5A2B", "#D9A066"]
+          },
+          "legend": {"title": "Store Type"}
+        },
+        "tooltip": [
+          {"field": "store_type", "title": "Store Type"},
+          {"field": "avg_spend", "title": "Average Spend", "format": ".2f"},
+          {"field": "transactions", "title": "Transactions"},
+          {"field": "revenue", "title": "Revenue", "format": ".2f"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 8,
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#4A3525"
+      },
+      "encoding": {
+        "x": {"field": "avg_spend", "type": "quantitative"},
+        "y": {"field": "transactions", "type": "quantitative"},
+        "text": {"field": "store_type"}
+      }
+    }
+  ]
+}
